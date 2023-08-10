@@ -16,6 +16,10 @@
         "@emotion/cache": "11.11.0",
         "@emotion/react": "11.11.0",
         "@emotion/styled": "11.11.0",
+        "@fortawesome/fontawesome-svg-core": "^6.4.2",
+        "@fortawesome/free-regular-svg-icons": "^6.4.2",
+        "@fortawesome/free-solid-svg-icons": "^6.4.2",
+        "@fortawesome/react-fontawesome": "^0.2.0",
         "@mui/icons-material": "5.11.16",
         "@mui/material": "5.13.0",
         "@mui/styled-engine": "5.12.3",
@@ -25,6 +29,7 @@
         "axios": "^1.4.0",
         "chart.js": "3.9.1",
         "chroma-js": "2.4.2",
+        "clsx": "^2.0.0",
         "prop-types": "15.8.1",
         "react": ">=16.8.0",
         "react-chartjs-2": "3.0.5",
@@ -72,7 +77,8 @@
         "eslint-plugin-prettier": "4.2.1",
         "eslint-plugin-react": "7.32.2",
         "eslint-plugin-react-hooks": "4.6.0",
-        "prettier": "2.8.8"
+        "prettier": "2.8.8",
+        "sass": "^1.64.2"
     },
     "peerDependencies": {
         "react": ">=16.8.0",

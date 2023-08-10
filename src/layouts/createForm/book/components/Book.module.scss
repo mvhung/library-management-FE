@@ -1,0 +1,124 @@
+.bookimg {
+    height: 116px;
+    text-align: center;
+    display: flex;
+    transition: all 1s;
+    /* flex-direction: column; */
+    align-items: center;
+}
+.bookimg img {
+    border-radius: 6px;
+    border: 1px solid rgba(57, 76, 96, 0.15);
+    min-width: 82px;
+    object-fit: cover;
+}
+
+.bookimg:hover img {
+    outline: 1px solid #858b8f;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+.active {
+    background-color: blue;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    border: 2px dashed #555;
+    color: #444;
+    .fileUpload {
+        cursor: pointer;
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border: 4px solid #ffffff;
+        overflow: hidden;
+        background-image: linear-gradient(to bottom, #2590eb 50%, #ffffff 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+        color: #ffffff;
+        font-size: 100px;
+
+        input[type='file'] {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        &:hover {
+            background-position: 0 -100%;
+
+            color: #2590eb;
+        }
+    }
+}
+
+.previewImgWrapper {
+    text-align: center;
+    user-select: none;
+    width: 100%;
+    height: 100%;
+}
+.previewImg {
+    border: 1px solid rgba(57, 76, 96, 0.15);
+    border-radius: 8px;
+    height: 100%;
+    width: 100%;
+}
+
+.inputMini {
+    height: 112px;
+    text-align: center;
+    display: flex;
+    transition: all 1s;
+    /* flex-direction: column; */
+    align-items: center;
+    min-width: 82px;
+
+    .fileUpload {
+        cursor: pointer;
+        height: 85%;
+        width: 100%;
+        border-radius: 100px;
+        position: relative;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border: 4px solid #ffffff;
+        overflow: hidden;
+        background-image: linear-gradient(to bottom, #2590eb 50%, #ffffff 50%);
+        background-size: 100% 200%;
+        transition: all 1s;
+        color: #ffffff;
+        font-size: 100px;
+
+        input[type='file'] {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+    }
+}

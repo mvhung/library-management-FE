@@ -1,0 +1,16 @@
+.css-9tf19b-MuiFormLabel-root-MuiInputLabel-root {
+    font-size: 1rem !important;
+    left: 10px !important;
+    top: -6px !important;
+}
+
+.css-o2lmg7-MuiInputBase-input-MuiOutlinedInput-input {
+    min-width: 100% !important;
+}
+.swiper-slide {
+    width: fit-content;
+    user-select: none;
+}
+.swiper {
+    width: 100%;
+}
