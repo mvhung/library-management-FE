@@ -53,6 +53,7 @@ import Document from 'examples/Icons/Document';
 import SpaceShip from 'examples/Icons/SpaceShip';
 import BookForm from 'layouts/createForm/book/BookForm';
 import Cube from 'examples/Icons/Cube';
+import Book from 'layouts/createForm/book/Book';
 
 const routes = [
     {
@@ -89,6 +90,15 @@ const routes = [
         route: '/billing',
         icon: <CreditCard size="12px" />,
         component: <Billing />,
+        noCollapse: true,
+    },
+    {
+        type: 'collapse',
+        name: 'Book',
+        key: 'book-infor',
+        route: 'view/book',
+        icon: <Cube size="12px" />,
+        component: <Book />,
         noCollapse: true,
     },
     {

@@ -66,7 +66,7 @@ function BookForm() {
     return (
         <DashboardLayout>
             <DashboardNavbar />
-            <Grid container spacing={2}>
+            <Grid style={{ marginTop: '28px' }} container spacing={2}>
                 <Grid item xs={6}>
                     <div className={clsx(styles.containerImg)}>
                         <div className={clsx(styles.wrapperPreview)}>
@@ -135,8 +135,8 @@ function BookForm() {
                         <TextField id="outlined" onChange={(e) => setCategory(e.target.value)} label="Thể loại" />
                     </div>
                 </Grid>
-                <Grid item xs={12} md={6} lg={6}></Grid>
-                <Grid item xs={12} md={6} lg={6}>
+                <Grid item xs={12} md={6} lg={9}></Grid>
+                <Grid item xs={12} md={6} lg={3}>
                     <div className={clsx(styles.submitBtn)}>
                         <button onClick={handleSubmit}>Submit</button>
                     </div>
