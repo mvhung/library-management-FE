@@ -1,8 +1,15 @@
-// import axios from 'axios';
-// import authHeader from './auth.header.js';
+import axios from 'axios';
+import authHeader from './auth.header.js';
 
-// const API_URL = 'http://localhost:8080/api/test/';
+const API_URL = 'http://localhost:8080/api/v1/book/';
 
+const getBook = (bookId) => {
+    return axios.get(API_URL + bookId, { headers: authHeader() });
+};
+
+const updateBook = (bookId) => {
+    return axios.get(API_URL + bookId);
+};
 // const getPublicContent = () => {
 //     return axios.get(API_URL + 'all');
 // };
@@ -19,11 +26,9 @@
 //     return axios.get(API_URL + 'admin', { headers: authHeader() });
 // };
 
-// const UserService = {
-//     getPublicContent,
-//     getUserBoard,
-//     getModeratorBoard,
-//     getAdminBoard,
-// };
+const BookService = {
+    getBook,
+    updateBook,
+};
 
-// export default UserService;
+export default BookService;

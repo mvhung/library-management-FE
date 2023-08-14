@@ -54,17 +54,18 @@ import SpaceShip from 'examples/Icons/SpaceShip';
 import BookForm from 'layouts/createForm/book/BookForm';
 import Cube from 'examples/Icons/Cube';
 import Book from 'layouts/createForm/book/Book';
-
+import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
+import ProfileForm from 'layouts/profile/ProfileForm';
 const routes = [
-    {
-        type: 'collapse',
-        name: 'Dashboard',
-        key: 'dashboard',
-        route: '/dashboard',
-        icon: <Shop size="12px" />,
-        component: <Dashboard />,
-        noCollapse: true,
-    },
+    // {
+    //     type: 'collapse',
+    //     name: 'Dashboard',
+    //     key: 'dashboard',
+    //     route: '/dashboard',
+    //     icon: <Shop size="12px" />,
+    //     component: <Dashboard />,
+    //     noCollapse: true,
+    // },
     {
         type: 'collapse',
         name: 'Home',
@@ -74,26 +75,26 @@ const routes = [
         component: <Home />,
         noCollapse: true,
     },
+    // {
+    //     type: 'collapse',
+    //     name: 'Tables',
+    //     key: 'tables',
+    //     route: '/tables',
+    //     icon: <Office size="12px" />,
+    //     component: <Tables />,
+    //     noCollapse: true,
+    // },
+    // {
+    //     type: 'collapse',
+    //     name: 'Billing',
+    //     key: 'billing',
+    //     route: '/billing',
+    //     icon: <CreditCard size="12px" />,
+    //     component: <Billing />,
+    //     noCollapse: true,
+    // },
     {
-        type: 'collapse',
-        name: 'Tables',
-        key: 'tables',
-        route: '/tables',
-        icon: <Office size="12px" />,
-        component: <Tables />,
-        noCollapse: true,
-    },
-    {
-        type: 'collapse',
-        name: 'Billing',
-        key: 'billing',
-        route: '/billing',
-        icon: <CreditCard size="12px" />,
-        component: <Billing />,
-        noCollapse: true,
-    },
-    {
-        type: 'collapse',
+        type: 'Admin',
         name: 'Book',
         key: 'book-infor',
         route: 'view/book',
@@ -102,7 +103,7 @@ const routes = [
         noCollapse: true,
     },
     {
-        type: 'collapse',
+        type: 'Admin',
         name: 'Book form',
         key: 'book-form',
         route: 'create/book',
@@ -110,10 +111,28 @@ const routes = [
         component: <BookForm />,
         noCollapse: true,
     },
-
-    { type: 'title', title: 'Account Pages', key: 'account-pages' },
     {
-        type: 'collapse',
+        type: 'Admin',
+        name: 'Book form update',
+        key: 'book-form-update',
+        route: 'update/book/:id',
+        icon: <Cube size="12px" />,
+        component: <BookFormUpdate />,
+        noCollapse: true,
+    },
+    {
+        type: 'Admin',
+        name: 'profile update',
+        key: 'profile-update',
+        route: 'update/user/:id',
+        icon: <Cube size="12px" />,
+        component: <ProfileForm />,
+        noCollapse: true,
+    },
+
+    // { type: 'title', title: 'Account Pages', key: 'account-pages' },
+    {
+        type: null,
         name: 'Profile',
         key: 'profile',
         route: '/profile',
@@ -122,7 +141,7 @@ const routes = [
         noCollapse: true,
     },
     {
-        type: 'collapse',
+        type: null,
         name: 'Sign In',
         key: 'sign-in',
         route: '/authentication/sign-in',
@@ -131,7 +150,7 @@ const routes = [
         noCollapse: true,
     },
     {
-        type: 'collapse',
+        type: null,
         name: 'Sign Up',
         key: 'sign-up',
         route: '/authentication/sign-up',

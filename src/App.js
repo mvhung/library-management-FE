@@ -47,6 +47,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from 'contex
 import brand from 'assets/images/logo-ct.png';
 
 import styles from './App.css';
+import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
 export default function App() {
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, direction, layout, openConfigurator, sidenavColor } = controller;
@@ -141,6 +142,7 @@ export default function App() {
             {layout === 'vr' && <Configurator />}
             <Routes>
                 {getRoutes(routes)}
+                {/* <Route path="/update/book" render={(props) => <BookFormUpdate {...props} />} /> */}
                 {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
             </Routes>
         </ThemeProvider>

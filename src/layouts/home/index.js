@@ -64,14 +64,14 @@ import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
 import Book from './components/book/Book';
 import { BooksContainer } from './components/book';
-
+// const data = {category:}
 const books = [
     {
         id: 1,
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://th.bing.com/th/id/OIP.z2Aq2mlLMtDAXQS8b_SZTwHaKF?pid=ImgDet&rs=1',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -81,7 +81,7 @@ const books = [
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://i.pinimg.com/736x/4e/2e/2c/4e2e2cd916defe47bd382182f55d5c25.jpg',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -91,7 +91,7 @@ const books = [
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://th.bing.com/th/id/OIP.z2Aq2mlLMtDAXQS8b_SZTwHaKF?pid=ImgDet&rs=1',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -101,7 +101,7 @@ const books = [
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -111,7 +111,7 @@ const books = [
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -121,7 +121,7 @@ const books = [
         title: 'gone by the wind',
         category: ['kinh dị', 'tình cảm'],
         description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.yj0Poj8h-MOU9uGtUouYjwHaHa?pid=ImgDet&rs=1',
+        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
         authors: [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
@@ -136,39 +136,56 @@ function Home() {
         <DashboardLayout>
             <DashboardNavbar />
 
-            <BooksContainer>
+            <BooksContainer category={'kinh dị'}>
                 <SoftBox p={2}>
-                    <Grid container spacing={3}>
-                        <Swiper
-                            // breakpoints={{
-                            //     576: {
-                            //         // width: 576,
-                            //         slidesPerView: 2,
-                            //     },
-                            //     768: {
-                            //         // width: 768,
-                            //         slidesPerView: 1,
-                            //     },
-                            // }}
-                            slidesPerView={3}
-                            // centeredSlides={true}
-                            spaceBetween={30}
-                            pagination={{
-                                clickable: true,
-                            }}
-                            modules={[Pagination]}
-                        >
-                            {books.map((book) => (
-                                <SwiperSlide key={book.id}>
-                                    <Book book={book} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </Grid>
+                    {/* <Grid container spacing={3}> */}
+                    <Swiper
+                        // breakpoints={{
+                        //     576: {
+                        //         // width: 576,
+                        //         slidesPerView: 2,
+                        //     },
+                        //     768: {
+                        //         // width: 768,
+                        //         slidesPerView: 1,
+                        //     },
+                        // }}
+                        slidesPerView={4}
+                        // centeredSlides={true}
+                        spaceBetween={30}
+                        // height={'300px'}
+                    >
+                        {books.map((book) => (
+                            <SwiperSlide height={'300px'} key={book.id}>
+                                <Book book={book} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                    {/* </Grid> */}
                 </SoftBox>
             </BooksContainer>
-
-            {/* <Footer /> */}
+            <BooksContainer category={'kinh dị'}>
+                <SoftBox p={2}>
+                    <Swiper slidesPerView={4} spaceBetween={30}>
+                        {books.map((book) => (
+                            <SwiperSlide height={'300px'} key={book.id}>
+                                <Book book={book} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </SoftBox>
+            </BooksContainer>
+            <BooksContainer category={'kinh dị'}>
+                <SoftBox p={2}>
+                    <Swiper slidesPerView={4} spaceBetween={30}>
+                        {books.map((book) => (
+                            <SwiperSlide height={'300px'} key={book.id}>
+                                <Book book={book} />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                </SoftBox>
+            </BooksContainer>
         </DashboardLayout>
     );
 }

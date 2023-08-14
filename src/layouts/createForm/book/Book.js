@@ -25,6 +25,7 @@ import SoftAvatar from 'components/SoftAvatar';
 import CategoryBtn from '../category/categoryBtn';
 
 const book = {
+    id: 12,
     title: 'black modern Employee Handbook booklet ',
     publishYear: '2017-22-13',
     author: {
@@ -138,6 +139,7 @@ function Book() {
                     </SoftBox>
                     <div className={clsx(styles.submitBtn)} style={{ marginTop: '32px' }}>
                         <button onClick={handleSubmit}>Rent Now</button>
+                        <Link to={'/update/book/' + book.id}>edit</Link>
                     </div>
                     <div className={clsx(styles.wrapCategory)}>
                         {book.category.map((category, index) => (

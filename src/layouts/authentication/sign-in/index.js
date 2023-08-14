@@ -46,21 +46,26 @@ function SignIn() {
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
     const handleSubmit = (event) => {
-        AuthService.login(email, password).then(
-            () => {
-                navigate('/profile');
-                window.location.reload();
-            },
-            (error) => {
-                const resMessage =
-                    (error.response && error.response.data && error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+        // AuthService.login(email, password).then(
+        //     () => {
+        //         navigate('/profile');
+        //         window.location.reload();
+        //     },
+        //     (error) => {
+        //         const resMessage =
+        //             (error.response && error.response.data && error.response.data.message) ||
+        //             error.message ||
+        //             error.toString();
 
-                // setLoading(false);
-                setMessage(resMessage);
-            },
-        );
+        //         // setLoading(false);
+        //         setMessage(resMessage);
+        //     },
+        // );
+        let data = {
+            username: 'maihung',
+            role: 'Admin',
+        };
+        localStorage.setItem('user', JSON.stringify(data));
     };
 
     return (
