@@ -57,7 +57,7 @@ import AuthService from 'services/auth.service';
 import { MenuItem } from '@mui/material';
 
 function DashboardNavbar({ absolute, light, isMini }) {
-    const [user, setUser] = useState(AuthService.getCurrentUser());
+    // const [user, setUser] = useState(UserService.getUser());
     const [navbarType, setNavbarType] = useState();
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -140,15 +140,15 @@ function DashboardNavbar({ absolute, light, isMini }) {
                             <SoftInput placeholder="Type here..." icon={{ component: 'search', direction: 'left' }} />
                         </SoftBox>
                         <SoftBox style={{ display: 'flex' }} color={light ? 'white' : 'inherit'}>
-                            {user ? (
+                            {12 ? (
                                 <h4
                                     style={{ fontSize: '14px', padding: '8px', cursor: 'pointer', userSelect: 'none' }}
                                     onClick={handleOpenMenu}
                                 >
-                                    Mai Hưng
+                                    ?
                                 </h4>
                             ) : (
-                                <Link to="/authentication/sign-in">
+                                <Link to="/sign-in">
                                     <IconButton sx={navbarIconButton} size="small">
                                         <Icon
                                             sx={({ palette: { dark, white } }) => ({
@@ -173,25 +173,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                                     {miniSidenav ? 'menu_open' : 'menu'}
                                 </Icon>
                             </IconButton>
-                            {/* <IconButton
-                                size="small"
-                                color="inherit"
-                                sx={navbarIconButton}
-                                onClick={handleConfiguratorOpen}
-                            >
-                                <Icon>settings</Icon>
-                            </IconButton> */}
-                            {/* <IconButton
-                                size="small"
-                                color="inherit"
-                                sx={navbarIconButton}
-                                aria-controls="notification-menu"
-                                aria-haspopup="true"
-                                variant="contained"
-                                
-                            >
-                                <Icon className={light ? 'text-white' : 'text-dark'}>notifications</Icon>
-                            </IconButton> */}
+
                             {renderMenu()}
                         </SoftBox>
                     </SoftBox>

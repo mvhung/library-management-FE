@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/v1/auth/authenticate/';
+const API_URL = 'http://localhost:8080/api/v1/auth/';
 
 const register = (username, email, password) => {
     return axios.post(API_URL + 'register', {
-        name: username,
+        username: username,
         email: email,
         password: password,
     });
@@ -17,30 +17,30 @@ const login = (email, password) => {
             password,
         })
         .then((response) => {
-            if (response.data.email) {
-                localStorage.setItem('user', JSON.stringify(response.data));
+            if (response.data.token) {
+                localStorage.setItem('token', JSON.stringify(response.data.token));
             }
 
-            return response.data;
+            return response.data.token;
         });
 };
 
 const logout = () => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     return axios.post(API_URL + 'signout').then((response) => {
         return response.data;
     });
 };
 
-const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem('user'));
-};
+// const getCurrentUser = () => {
+//     return JSON.parse(localStorage.getItem('token'));
+// };
 
 const AuthService = {
     register,
     login,
     logout,
-    getCurrentUser,
+    // getCurrentUser,
 };
 
 export default AuthService;

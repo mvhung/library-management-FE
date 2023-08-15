@@ -32,18 +32,14 @@ import SoftButton from 'components/SoftButton';
 import BasicLayout from 'layouts/authentication/components/BasicLayout';
 import Socials from 'layouts/authentication/components/Socials';
 import Separator from 'layouts/authentication/components/Separator';
-
+import { useNavigate } from 'react-router-dom';
 // Images
 import curved6 from 'assets/images/curved-images/curved14.jpg';
 
+import AuthService from 'services/auth.service';
+
 function SignUp() {
-    // const data = {
-    //   "firstName":"mai",
-    //   "lastName":"hung",
-    //   "email":"maihung12@gmail.com",
-    //   "password":"hahaa",
-    //   "fullName":"mai hung"
-    // }
+    const navigate = useNavigate();
 
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState('');
@@ -53,21 +49,11 @@ function SignUp() {
     const [username, setUsername] = useState('');
 
     const handleSubmit = (event) => {
-        // axios.post('http://localhost:8080/api/v1/auth/register', {
-        //   "name":username,
-        //   "email":email,
-        //   "password":password,
-        // })
-        // .then((response) => {
-        //   console.log(response.data);
-        // }, (error) => {
-        //   console.log(error);
-        // });
-
         AuthService.register(username, email, password).then(
             (response) => {
                 setMessage(response.data.message);
                 setSuccessful(true);
+                navigate('/sign-in');
             },
             (error) => {
                 const resMessage =
@@ -93,10 +79,7 @@ function SignUp() {
                         Register with
                     </SoftTypography>
                 </SoftBox>
-                {/* <SoftBox mb={2}>
-          <Socials />
-        </SoftBox>
-        <Separator /> */}
+
                 <SoftBox pt={2} pb={3} px={3}>
                     <SoftBox component="form" role="form">
                         <SoftBox mb={2}>

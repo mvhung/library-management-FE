@@ -30,7 +30,7 @@ import AuthService from 'services/auth.service';
 import { useNavigate } from 'react-router-dom';
 // Authentication layout components
 import CoverLayout from 'layouts/authentication/components/CoverLayout';
-
+// import {}
 // Images
 import curved9 from 'assets/images/curved-images/curved-6.jpg';
 
@@ -46,26 +46,26 @@ function SignIn() {
     const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
     const handleSubmit = (event) => {
-        // AuthService.login(email, password).then(
-        //     () => {
-        //         navigate('/profile');
-        //         window.location.reload();
-        //     },
-        //     (error) => {
-        //         const resMessage =
-        //             (error.response && error.response.data && error.response.data.message) ||
-        //             error.message ||
-        //             error.toString();
+        AuthService.login(email, password).then(
+            () => {
+                navigate('/home');
+                // window.location.reload();
+            },
+            (error) => {
+                const resMessage =
+                    (error.response && error.response.data && error.response.data.message) ||
+                    error.message ||
+                    error.toString();
 
-        //         // setLoading(false);
-        //         setMessage(resMessage);
-        //     },
-        // );
-        let data = {
-            username: 'maihung',
-            role: 'Admin',
-        };
-        localStorage.setItem('user', JSON.stringify(data));
+                // setLoading(false);
+                setMessage(resMessage);
+            },
+        );
+        // let data = {
+        //     username: 'maihung',
+        //     role: 'Admin',
+        // };
+        // localStorage.setItem('user', JSON.stringify(data));
     };
 
     return (

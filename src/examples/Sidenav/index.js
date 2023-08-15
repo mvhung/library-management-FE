@@ -43,8 +43,9 @@ import sidenavLogoLabel from 'examples/Sidenav/styles/sidenav';
 // Soft UI Dashboard React context
 import { useSoftUIController, setMiniSidenav } from 'context';
 import AuthService from 'services/auth.service';
+import UserService from 'services/user.service';
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-    const [user, setUser] = useState(AuthService.getCurrentUser());
+    const [user, setUser] = useState(UserService.getUser());
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, transparentSidenav } = controller;
     const location = useLocation();

@@ -44,9 +44,10 @@ import burceMars from 'assets/images/bruce-mars.jpg';
 import curved0 from 'assets/images/curved-images/curved0.jpg';
 import { Edit } from '@mui/icons-material';
 import AuthService from 'services/auth.service';
+import UserService from 'services/user.service';
 
 function Header() {
-    const [user, setUser] = useState(AuthService.getCurrentUser());
+    const [user, setUser] = useState(UserService.getUser());
     const [tabsOrientation, setTabsOrientation] = useState('horizontal');
     const [tabValue, setTabValue] = useState(0);
 
