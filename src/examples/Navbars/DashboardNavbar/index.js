@@ -57,7 +57,15 @@ import AuthService from 'services/auth.service';
 import { MenuItem } from '@mui/material';
 
 function DashboardNavbar({ absolute, light, isMini }) {
-    // const [user, setUser] = useState(UserService.getUser());
+    const [user, setUser] = useState();
+
+    useEffect(() => {
+        UserService.getUser().then((res) => {
+            setUser(res);
+            return res;
+        });
+    }, []);
+
     const [navbarType, setNavbarType] = useState();
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -140,12 +148,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
                             <SoftInput placeholder="Type here..." icon={{ component: 'search', direction: 'left' }} />
                         </SoftBox>
                         <SoftBox style={{ display: 'flex' }} color={light ? 'white' : 'inherit'}>
-                            {12 ? (
+                            {user ? (
                                 <h4
                                     style={{ fontSize: '14px', padding: '8px', cursor: 'pointer', userSelect: 'none' }}
                                     onClick={handleOpenMenu}
                                 >
-                                    ?
+                                    {user.username}
                                 </h4>
                             ) : (
                                 <Link to="/sign-in">
