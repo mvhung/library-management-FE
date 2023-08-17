@@ -123,3 +123,14 @@
 .wrapForm {
     display: flex;
 }
+
+.addAuthor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 112px;
+    width: 60%;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px dashed #0d1216;
+}
