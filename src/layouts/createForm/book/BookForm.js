@@ -7,7 +7,7 @@ import SoftTypography from 'components/SoftTypography';
 import SoftButton from 'components/SoftButton';
 import PageLayout from 'examples/LayoutContainers/PageLayout';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
-import { Box, Grid, TextField, Autocomplete, TextareaAutosize } from '@mui/material';
+import { Box, Grid, TextField, Autocomplete, TextareaAutosize, Divider } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import styles from './BookForm.module.css';
@@ -15,7 +15,7 @@ import { WrapInput } from 'utils';
 import PreviewImg from './components/PreviewImg';
 import BookImg from './components/BookImg';
 import { Pagination, Scrollbar, A11y } from 'swiper/modules';
-import BookImgInput from './components/BookImgInput';
+import ImgInput from './components/ImgInput';
 import clsx from 'clsx';
 
 const data = {
@@ -70,14 +70,10 @@ function BookForm() {
                 <Grid item xs={6}>
                     <div className={clsx(styles.containerImg)}>
                         <div className={clsx(styles.wrapperPreview)}>
-                            {activeImg ? (
-                                <PreviewImg src={activeImg} />
-                            ) : (
-                                <BookImgInput onChangeFile={handleFileInput} />
-                            )}
+                            {activeImg ? <PreviewImg src={activeImg} /> : <ImgInput onChangeFile={handleFileInput} />}
                         </div>
 
-                        <Swiper modules={[Pagination, Scrollbar, A11y]} spaceBetween={20} slidesPerView={'auto'}>
+                        {/* <Swiper modules={[Pagination, Scrollbar, A11y]} spaceBetween={20} slidesPerView={'auto'}>
                             {bookImg.map((img, index) => (
                                 <SwiperSlide key={index} onClick={() => handleChangeImg(img)}>
                                     <BookImg src={img} active={img == activeImg} />
@@ -86,10 +82,10 @@ function BookForm() {
 
                             {activeImg && (
                                 <SwiperSlide style={{ paddingRight: '36px' }}>
-                                    <BookImgInput onChangeFile={handleFileInput} mini />
+                                    <ImgInput onChangeFile={handleFileInput} mini />
                                 </SwiperSlide>
                             )}
-                        </Swiper>
+                        </Swiper> */}
                     </div>
                 </Grid>
                 <Grid item xs={6}>
@@ -120,7 +116,7 @@ function BookForm() {
                             placeholder="description"
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        <TextField
+                        {/* <TextField
                             required
                             id="outlined-required"
                             onChange={(e) => setAuthor(e.target.value)}
@@ -131,16 +127,48 @@ function BookForm() {
                             id="outlined-required"
                             onChange={(e) => setPublisher(e.target.value)}
                             label="Nhà xuất bản"
-                        />
+                        /> */}
                         <TextField id="outlined" onChange={(e) => setCategory(e.target.value)} label="Thể loại" />
                     </div>
                 </Grid>
-                <Grid item xs={12} md={6} lg={9}></Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                    <div className={clsx(styles.submitBtn)}>
-                        <button onClick={handleSubmit}>Submit</button>
+            </Grid>
+            <Divider />
+            <h5>Tác giả</h5>
+            <Grid container>
+                <Grid item xs={6}>
+                    <div className={clsx(styles.wrapForm)}>
+                        <div className={clsx(styles.containerImg)}>
+                            <div className={clsx(styles.wrapperPreview)}>
+                                {activeImg ? (
+                                    <PreviewImg src={activeImg} />
+                                ) : (
+                                    <ImgInput mini onChangeFile={handleFileInput} />
+                                )}
+                            </div>
+                        </div>
+
+                        <div className={clsx(styles.wrapperInput)}>
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Tên sách"
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                            <TextField
+                                required
+                                id="outlined-required"
+                                label="Tên sách"
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
                     </div>
                 </Grid>
+            </Grid>
+            <Grid item xs={12} md={6} lg={9}></Grid>
+            <Grid item xs={12} md={6} lg={3}>
+                <div className={clsx(styles.submitBtn)}>
+                    <button onClick={handleSubmit}>Submit</button>
+                </div>
             </Grid>
         </DashboardLayout>
     );

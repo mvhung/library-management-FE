@@ -13,7 +13,7 @@ import UserService from 'services/user.service';
 // trash import
 import styles from '../createForm/book/BookForm.module.css';
 import PreviewImg from '../createForm/book/components/PreviewImg';
-import BookImgInput from '../createForm/book/components/BookImgInput';
+import BookImgInput from '../createForm/book/components/ImgInput';
 
 function ProfileForm() {
     const { id } = useParams();

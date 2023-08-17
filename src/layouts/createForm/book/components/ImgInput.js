@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './Book.module.scss';
 import clsx from 'clsx';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-function BookImgInput({ onChangeFile, mini }) {
+function ImgInput({ onChangeFile, mini }) {
     return (
         <div className={clsx(styles.wrapper, mini ? styles.inputMini : '')}>
             <div className={clsx(styles.fileUpload)}>
@@ -14,9 +14,9 @@ function BookImgInput({ onChangeFile, mini }) {
     );
 }
 
-export default BookImgInput;
+export default ImgInput;
 
-BookImgInput.propTypes = {
+ImgInput.propTypes = {
     onChangeFile: PropTypes.func,
     mini: PropTypes.bool,
 };

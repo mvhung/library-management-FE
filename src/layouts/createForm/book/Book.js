@@ -15,7 +15,7 @@ import { WrapInput } from 'utils';
 import PreviewImg from './components/PreviewImg';
 import BookImg from './components/BookImg';
 import { Pagination, Scrollbar, A11y } from 'swiper/modules';
-import BookImgInput from './components/BookImgInput';
+import ImgInput from './components/ImgInput';
 import clsx from 'clsx';
 import Separator from 'layouts/authentication/components/Separator';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

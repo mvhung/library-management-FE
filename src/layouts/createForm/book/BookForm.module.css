@@ -26,7 +26,7 @@
 .wrapperInput {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
 .wrapperInput > * {
     margin-bottom: 32px !important;
@@ -118,4 +118,8 @@
 
 .wrapCategory > * {
     margin-right: 8px;
+}
+
+.wrapForm {
+    display: flex;
 }
