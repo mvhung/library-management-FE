@@ -15,7 +15,7 @@ import { WrapInput } from 'utils';
 import PreviewImg from './components/PreviewImg';
 import BookImg from './components/BookImg';
 import { Pagination, Scrollbar, A11y } from 'swiper/modules';
-import BookImgInput from './components/BookImgInput';
+import BookImgInput from './components/ImgInput';
 import clsx from 'clsx';
 
 const data = {
@@ -37,7 +37,7 @@ const data = {
 
 function BookFormUpdate({ currentBook }) {
     const { id } = useParams();
-    console.log(id);
+
     const [activeImg, setActiveImg] = useState(currentBook.bookImg[0]);
     const [bookImg, setBookImg] = useState(currentBook.bookImg);
 
