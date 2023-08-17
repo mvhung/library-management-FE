@@ -4,128 +4,176 @@ import clsx from 'clsx';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
+import styles2 from '../createForm/book/BookForm.module.css';
+import UserService from 'services/user.service';
+
+// trash import
 import styles from '../createForm/book/BookForm.module.css';
+import PreviewImg from '../createForm/book/components/PreviewImg';
+import BookImgInput from '../createForm/book/components/BookImgInput';
 
 function ProfileForm() {
     const { id } = useParams();
+
+    const navigate = useNavigate();
+
     const [user, setUser] = useState({
         username: null,
-        firtsname: null,
-        lastname: null,
+        firstName: null,
+        lastName: null,
         address: null,
         email: null,
-        password: null,
+        // password: null,
     });
 
-    useEffect(() => {}, []);
+    // const [activeImg, setActiveImg] = useState();
+    const [avatar, setAvatar] = useState();
 
-    // const [activeImg, setActiveImg] = useState(data.bookImg[0]);
-    // const [bookImg, setBookImg] = useState(data.bookImg);
+    const [username, setUsername] = useState();
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
+    const [address, setAddress] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [avatarUrl, setAvatarUrl] = useState();
 
-    // const [title, setTitle] = useState('');
-    // const [description, setDescription] = useState('');
-    // const [date, setDate] = useState('');
-    // const [quantity, setQuantity] = useState('');
-    // const [author, setAuthor] = useState('');
-    // const [publisher, setPublisher] = useState('');
-    // const [category, setCategory] = useState('');
+    useEffect(() => {
+        UserService.getUserById(id).then(
+            (res) => {
+                // setUser(res);
+                setUsername(res.username);
+                setFirstName(res.firstName);
+                setLastName(res.lastName);
+                setPassword(res.password);
+                setEmail(res.email);
+                setAddress(res.address);
+                setAvatarUrl(res.avatarUrl);
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
+    }, []);
 
-    // function handleChangeImg(img) {
-    //     setActiveImg(img);
-    // }
-    // function handleFileInput(file) {
-    //     // console.log(file);
-    //     if (file.length != 0) {
-    //         let newUrl = URL.createObjectURL(file[0]);
-    //         setActiveImg(newUrl);
-    //         setBookImg((pre) => [...pre, newUrl]);
-    //     }
-    // }
     function handleSubmit() {
-        let object = user;
-        console.log(object);
+        let user = { username, firstName, lastName, address, email, password };
+        console.log(user);
+        UserService.updateUserAvatar(id, avatar).then((res) => {
+            console.log(res);
+        });
+        UserService.updateUser(id, user).then(
+            (res) => {
+                navigate('/profile');
+            },
+            (error) => {
+                console.log(error);
+            },
+        );
     }
-    function handleInput(key, value) {
-        user[key] = value;
-        setUser(user);
+    function handleFileInput(file) {
+        // console.log(file);
+        if (file.length != 0) {
+            let newUrl = URL.createObjectURL(file[0]);
+
+            setAvatarUrl(newUrl);
+            setAvatar(file[0]);
+        }
     }
     return (
         <DashboardLayout>
             <DashboardNavbar />
             <Grid style={{ marginTop: '28px' }} container spacing={2}>
-                {/* <Grid item xs={6}>
-                    <div className={clsx(styles.containerImg)}>
-                        <div className={clsx(styles.wrapperPreview)}>
-                            {activeImg ? (
-                                <PreviewImg src={activeImg} />
+                <Grid item xs={6}>
+                    <div className={clsx(styles2.containerImg)}>
+                        <div className={clsx(styles2.wrapperPreview)}>
+                            {avatarUrl ? (
+                                <PreviewImg src={avatarUrl} edit />
                             ) : (
                                 <BookImgInput onChangeFile={handleFileInput} />
                             )}
                         </div>
-
-                        <Swiper modules={[Pagination, Scrollbar, A11y]} spaceBetween={20} slidesPerView={'auto'}>
-                            {bookImg.map((img, index) => (
-                                <SwiperSlide key={index} onClick={() => handleChangeImg(img)}>
-                                    <BookImg src={img} active={img == activeImg} />
-                                </SwiperSlide>
-                            ))}
-
-                            {activeImg && (
-                                <SwiperSlide style={{ paddingRight: '36px' }}>
-                                    <BookImgInput onChangeFile={handleFileInput} mini />
-                                </SwiperSlide>
-                            )}
-                        </Swiper>
                     </div>
-                </Grid> */}
+                </Grid>
                 <Grid item xs={6}>
                     <div className={clsx(styles.wrapperInput)}>
                         <TextField
+                            autocomplete="off"
+                            defaultValue={username}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={username}
                             required
                             id="outlined-required"
                             label="User Name"
-                            onChange={(e) => handleInput('username', e.target.value)}
+                            onChange={(e) => setUsername(e.target.value)}
                         />
                         <div style={{ margin: 0, display: 'flex', justifyContent: 'space-between' }}>
                             <TextField
+                                autocomplete="off"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                defaultValue={firstName}
+                                value={firstName}
                                 style={{ flex: 1, marginRight: '12px' }}
-                                label="Firt Name"
+                                label="First Name"
                                 // type="datetime-local"
-                                onChange={(e) => handleInput('firstname', e.target.value)}
+                                onChange={(e) => setFirstName(e.target.value)}
                             />
                             <TextField
+                                autocomplete="off"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                defaultValue={lastName}
+                                value={lastName}
                                 // required
                                 id="outlined"
-                                onChange={(e) => handleInput('lastname', e.target.value)}
+                                onChange={(e) => setLastName(e.target.value)}
                                 label="Last Name"
                                 // type="number"
                             />
                         </div>
-                        {/* <TextareaAutosize
-                            minRows={10}
-                            placeholder="description"
-                            onChange={(e) => handleInput(e.target.value)}
-                        /> */}
+
                         <TextField
+                            autocomplete="off"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            defaultValue={password}
+                            value={password}
                             required
                             id="required"
-                            onChange={(e) => handleInput('password', e.target.value)}
+                            onChange={(e) => setPassword(e.target.value)}
                             label="Password"
                             type="password"
                         />
                         <TextField
+                            autocomplete="off"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            defaultValue={email}
+                            value={email}
                             required
                             id="required"
-                            onChange={(e) => handleInput('email', e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                             label="Email"
                             type="email"
                         />
                         <TextField
+                            autocomplete="off"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            defaultValue={address}
+                            value={address}
                             id="outlined"
-                            onChange={(e) => handleInput('address', e.target.value)}
+                            onChange={(e) => setAddress(e.target.value)}
                             label="Address"
                         />
                     </div>

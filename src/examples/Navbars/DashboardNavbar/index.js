@@ -65,7 +65,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
             return res;
         });
     }, []);
-
     const [navbarType, setNavbarType] = useState();
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;

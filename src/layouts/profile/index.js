@@ -49,11 +49,30 @@ import team1 from 'assets/images/team-1.jpg';
 import team2 from 'assets/images/team-2.jpg';
 import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
+import { useEffect, useState } from 'react';
+import UserService from 'services/user.service';
 
 function Overview() {
+    const [user, setUser] = useState({
+        userId: null,
+        username: null,
+        firstName: null,
+        lastName: null,
+        email: null,
+        address: null,
+    });
+
+    useEffect(() => {
+        UserService.getUser().then((res) => {
+            setUser(res);
+            console.log(res);
+            return res;
+        });
+    }, []);
+
     return (
         <DashboardLayout>
-            <Header />
+            <Header user={user} />
             <SoftBox mt={5} mb={3}>
                 <Grid container spacing={3}>
                     {/* <Grid item xs={12} md={6} xl={4}>
@@ -64,10 +83,10 @@ function Overview() {
                             title="profile information"
                             // description="Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality)."
                             info={{
-                                fullName: 'Alec M. Thompson',
+                                fullName: user.firstName && user.lastName ? user.firstName + '' + user.lastName : '',
                                 // mobile: '(44) 123 1234 123',
-                                email: 'alecthompson@mail.com',
-                                location: 'USA',
+                                email: user.email,
+                                location: user.address,
                             }}
                             // social={[
                             //     {

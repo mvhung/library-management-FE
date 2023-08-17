@@ -106,26 +106,6 @@ const books = [
             { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
         ],
     },
-    {
-        id: 4,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
-    {
-        id: 4,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
 ];
 
 function Home() {
@@ -138,30 +118,13 @@ function Home() {
 
             <BooksContainer category={'kinh dị'}>
                 <SoftBox p={2}>
-                    {/* <Grid container spacing={3}> */}
-                    <Swiper
-                        // breakpoints={{
-                        //     576: {
-                        //         // width: 576,
-                        //         slidesPerView: 2,
-                        //     },
-                        //     768: {
-                        //         // width: 768,
-                        //         slidesPerView: 1,
-                        //     },
-                        // }}
-                        slidesPerView={4}
-                        // centeredSlides={true}
-                        spaceBetween={30}
-                        // height={'300px'}
-                    >
+                    <Swiper slidesPerView={4} spaceBetween={30}>
                         {books.map((book) => (
                             <SwiperSlide height={'300px'} key={book.id}>
                                 <Book book={book} />
                             </SwiperSlide>
                         ))}
                     </Swiper>
-                    {/* </Grid> */}
                 </SoftBox>
             </BooksContainer>
             <BooksContainer category={'kinh dị'}>

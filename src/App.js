@@ -45,6 +45,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from 'contex
 
 // Images
 import brand from 'assets/images/logo-ct.png';
+import logo from 'assets/images/logo.png';
 
 import styles from './App.css';
 import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
@@ -130,7 +131,7 @@ export default function App() {
                 <>
                     <Sidenav
                         color={sidenavColor}
-                        brand={brand}
+                        brand={logo}
                         brandName="Soft UI Dashboard"
                         routes={routes}
                         onMouseEnter={handleOnMouseEnter}
@@ -143,7 +144,7 @@ export default function App() {
             <Routes>
                 {getRoutes(routes)}
                 {/* <Route path="/update/book" render={(props) => <BookFormUpdate {...props} />} /> */}
-                {/* <Route path="*" element={<Navigate to="/dashboard" />} /> */}
+                <Route path="*" element={<Navigate to="/home" />} />
             </Routes>
         </ThemeProvider>
     );

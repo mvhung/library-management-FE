@@ -45,9 +45,11 @@ import curved0 from 'assets/images/curved-images/curved0.jpg';
 import { Edit } from '@mui/icons-material';
 import AuthService from 'services/auth.service';
 import UserService from 'services/user.service';
+import PropTypes from 'prop-types';
 
-function Header() {
-    const [user, setUser] = useState(UserService.getUser());
+import noAvatar from 'assets/images/no-avatar.jpg';
+function Header({ user }) {
+    // const [user, setUser] = useState(UserService.getUser());
     const [tabsOrientation, setTabsOrientation] = useState('horizontal');
     const [tabValue, setTabValue] = useState(0);
 
@@ -106,13 +108,19 @@ function Header() {
                 }}
             >
                 <Grid container spacing={3} alignItems="center">
-                    {/* <Grid item>
-                        <SoftAvatar src={burceMars} alt="profile-image" variant="rounded" size="xl" shadow="sm" />
-                    </Grid> */}
+                    <Grid item>
+                        <SoftAvatar
+                            src={user.avatarUrl ? user.avatarUrl : noAvatar}
+                            alt="profile-image"
+                            variant="rounded"
+                            size="xl"
+                            shadow="sm"
+                        />
+                    </Grid>
                     <Grid item>
                         <SoftBox height="100%" mt={0.5} lineHeight={1}>
                             <SoftTypography variant="h5" fontWeight="medium">
-                                Alex Thompson
+                                {user.username}
                             </SoftTypography>
                             {/* <SoftTypography variant="button" color="text" fontWeight="medium">
                                 CEO / Co-Founder
@@ -134,7 +142,7 @@ function Header() {
                         </AppBar> */}
                         <SoftTypography component={Link} to={'/'} variant="body2" color="secondary">
                             <Tooltip title={'edit'} placement="top">
-                                <Link to={'/edit/profile/' + user.id}>
+                                <Link to={'/edit/profile/' + user.userId}>
                                     <Icon>edit</Icon>
                                 </Link>
                             </Tooltip>
@@ -147,3 +155,7 @@ function Header() {
 }
 
 export default Header;
+
+Header.propTypes = {
+    user: PropTypes.object.isRequired,
+};

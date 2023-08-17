@@ -45,7 +45,13 @@ import { useSoftUIController, setMiniSidenav } from 'context';
 import AuthService from 'services/auth.service';
 import UserService from 'services/user.service';
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
-    const [user, setUser] = useState(UserService.getUser());
+    const [user, setUser] = useState({ roleName: null });
+    useEffect(() => {
+        UserService.getUser().then((res) => {
+            setUser(res);
+        });
+    }, []);
+
     const [controller, dispatch] = useSoftUIController();
     const { miniSidenav, transparentSidenav } = controller;
     const location = useLocation();
@@ -120,7 +126,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
             returnValue = <Divider key={key} />;
         }
         if (user) {
-            if (type == 'Admin' && user.role === 'Admin') {
+            if (type == 'Admin' && user.roleName === 'ADMIN') {
                 returnValue = href ? (
                     <Link href={href} key={key} target="_blank" rel="noreferrer" sx={{ textDecoration: 'none' }}>
                         <SidenavCollapse

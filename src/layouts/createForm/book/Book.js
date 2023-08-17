@@ -112,14 +112,6 @@ function Book() {
                         <div className={clsx(styles.wrapperPreview)}>
                             {activeImg ? <PreviewImg src={activeImg} /> : <></>}
                         </div>
-
-                        <Swiper modules={[Pagination, Scrollbar, A11y]} spaceBetween={20} slidesPerView={'auto'}>
-                            {bookImg.map((img, index) => (
-                                <SwiperSlide key={index} onClick={() => handleChangeImg(img)}>
-                                    <BookImg src={img} active={img == activeImg} />
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
                     </div>
                 </Grid>
                 <Grid item xs={6} style={{ padding: '0 30px' }}>

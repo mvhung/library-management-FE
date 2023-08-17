@@ -16,7 +16,7 @@ function BooksContainer({ category, children }) {
                     </SoftBox>
                     <SoftBox mb={1}>
                         <SoftTypography variant="button" fontWeight="regular" color="text">
-                            {/* Architects design houses */}
+                            <></>
                         </SoftTypography>
                     </SoftBox>
                 </SoftBox>
@@ -29,6 +29,6 @@ function BooksContainer({ category, children }) {
 export default BooksContainer;
 
 BooksContainer.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     category: PropTypes.string,
 };
