@@ -14,28 +14,31 @@ import styles from './BookForm.module.css';
 
 function BookForm() {
     const [activeImg, setActiveImg] = useState('');
-
     const [bookImg, setBookImg] = useState('');
-
     const [title, setTitle] = useState('');
-
     const [description, setDescription] = useState('');
-
     const [date, setDate] = useState('');
-
     const [quantity, setQuantity] = useState('');
-
-    const [authors, setAuthors] = useState([{ name: '', introduce: '', img: null }]);
+    const [authors, setAuthors] = useState([{ name: '', introduce: '', url: null }]);
 
     const [category, setCategory] = useState({ name: '', description: '' });
+    const [publisher, setPublisher] = useState({ name: '', introduce: '', url: null });
 
-    const [publisher, setPublisher] = useState({ name: '', introduce: '', img: null });
+    const [authorImage, setAuthorImage] = useState('');
+    const [publisherImage, setPublisherImage] = useState('');
 
-    function handleFileInput(file) {
-        if (file.length != 0) {
-            let newUrl = URL.createObjectURL(file[0]);
+    async function handleFileInput(file, type) {
+        if (file.length !== 0) {
+            const newUrl = URL.createObjectURL(file[0]);
             setActiveImg(newUrl);
-            setBookImg((pre) => [...pre, newUrl]);
+
+            if (type === 'book') {
+                setBookImg(file[0]);
+            } else if (type === 'author') {
+                setAuthorImage(file[0]);
+            } else if (type === 'publisher') {
+                setPublisherImage(file[0]);
+            }
         }
     }
 
@@ -43,40 +46,35 @@ function BookForm() {
         setActiveImg(img);
     };
 
+    async function handleUploadImage(file, type) {
+        if (!file) {
+            return null;
+        }
+
+        const uploadedImage = await uploadImageToS3(file, type);
+        return uploadedImage;
+    }
+
     const handleSubmit = async () => {
-        if (bookImg) {
-            const uploadedBookImage = await uploadImageToS3(bookImg, 'books');
-            console.log('Uploaded book image:', uploadedBookImage);
-        }
+        const uploadedBookImage = await handleUploadImage(bookImg, 'books');
+        const uploadedPublisherImage = await handleUploadImage(publisherImage, 'publishers');
 
-        if (publisher.img) {
-            const uploadedPublisherImage = await uploadImageToS3(publisher.img, 'publishers');
-            setPublisherImageUrl(uploadedPublisherImage);
-            console.log('Uploaded publisher image:', uploadedPublisherImage);
-        }
-
-        const bookAuthors = authors.map(async (author) => {
-            if (author.img) {
-                const uploadedAuthorImage = await uploadImageToS3(author.img, 'authors');
+        const bookAuthors = await Promise.all(
+            authors.map(async (author) => {
+                const uploadedAuthorImage = await handleUploadImage(author.img, 'authors');
                 return {
                     authorFullName: author.name,
                     authorIntroduce: author.introduce,
                     authorImageUrl: uploadedAuthorImage,
                 };
-            } else {
-                return {
-                    authorFullName: author.name,
-                    authorIntroduce: author.introduce,
-                };
-            }
-        });
-
+            }),
+        );
         const postData = {
             bookTitle: title,
             bookDescription: description,
             bookPublishedYear: parseInt(date.substring(0, 4)),
             bookQuantity: parseInt(quantity),
-            bookImageLink: uploadedBookImages,
+            bookImageLink: uploadedBookImage,
             category: {
                 categoryName: category.name,
                 categoryDescription: '',
@@ -85,7 +83,7 @@ function BookForm() {
                 publisherName: publisher.name,
                 publisherIntroduce: publisher.introduce,
                 publisherWebsiteUrl: '',
-                publisherImageUrl: publisher.img,
+                publisherImageUrl: uploadedPublisherImage,
             },
             authors: bookAuthors,
         };
