@@ -69,6 +69,7 @@ import React, { useEffect, useState } from 'react';
 
 import BookService from 'services/book.service';
 import AuthService from 'services/auth.service';
+import UserService from 'services/user.service';
 
 function Home() {
     const { size } = typography;
@@ -94,7 +95,7 @@ function Home() {
 
         const fetchUserInfo = async (user) => {
             try {
-                user = await AuthService.getCurrentUser();
+                user = await UserService.getUser();
                 setUser(user);
             } catch (error) {
                 console.error('Error fetching user info:', error);

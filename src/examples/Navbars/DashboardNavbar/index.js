@@ -55,6 +55,7 @@ import logoSpotify from 'assets/images/small-logos/logo-spotify.svg';
 import UserService from 'services/user.service';
 import AuthService from 'services/auth.service';
 import { MenuItem } from '@mui/material';
+import Search from 'components/Search/Search';
 
 function DashboardNavbar({ absolute, light, isMini }) {
     const [user, setUser] = useState();
@@ -144,7 +145,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 {isMini ? null : (
                     <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
                         <SoftBox pr={1}>
-                            <SoftInput placeholder="Type here..." icon={{ component: 'search', direction: 'left' }} />
+                            {/* <SoftInput
+                                placeholder="Search some book..."
+                                icon={{ component: 'search', direction: 'left' }}
+                            /> */}
+                            <Search />
                         </SoftBox>
                         <SoftBox style={{ display: 'flex' }} color={light ? 'white' : 'inherit'}>
                             {user ? (

@@ -13,3 +13,8 @@ export function WrapInput({ type, ...ref }) {
 WrapInput.propTypes = {
     type: PropTypes.string,
 };
+
+// push img to aws
+export async function convertImagesToUrls(folder, images) {
+    const uploadedBookImage = await handleUploadImage(bookImg, 'books');
+}

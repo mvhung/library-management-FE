@@ -36,12 +36,20 @@ const getBookById = async (bookId) => {
     }
 };
 
+const searchBook = (key) => {
+    return axios.get(API_URL + 'search', {
+        params: {
+            keyword: String(key),
+        },
+    });
+};
+
 const updateBook = (bookId) => {
-    return axios.get(API_URL + 'books/' + bookId);
+    return axios.get(API_URL + 'books' + bookId);
 };
 
 const createBook = (book) => {
-    return axios.post(API_URL + 'books/', book, { headers: authHeader() });
+    return axios.post(API_URL + 'books', book, { headers: authHeader() });
 };
 
 const updateBookImg = (img) => {
@@ -74,6 +82,7 @@ const BookService = {
     getBookById,
     updateBook,
     createBook,
+    searchBook,
 };
 
 export default BookService;

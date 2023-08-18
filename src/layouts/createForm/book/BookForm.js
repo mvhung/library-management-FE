@@ -11,40 +11,37 @@ import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
 import { WrapInput } from 'utils';
 import ImgInput from './components/ImgInput';
 import styles from './BookForm.module.css';
+import BookService from 'services/book.service';
 
 function BookForm() {
     const [activeImg, setActiveImg] = useState('');
     const [bookImg, setBookImg] = useState('');
+    const [bookImgFile, setBookImgFile] = useState();
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [authors, setAuthors] = useState([{ name: '', introduce: '', url: null }]);
+    const [authors, setAuthors] = useState([{ id: 0, name: '', introduce: '', img: null, imgFile: null }]);
 
-    const [category, setCategory] = useState({ name: '', description: '' });
-    const [publisher, setPublisher] = useState({ name: '', introduce: '', url: null });
+    const [category, setCategory] = useState('');
+    const [publisher, setPublisher] = useState({ id: 0, name: '', introduce: '', img: null, imgFile: null });
 
     const [authorImage, setAuthorImage] = useState('');
     const [publisherImage, setPublisherImage] = useState('');
 
-    async function handleFileInput(file, type) {
-        if (file.length !== 0) {
-            const newUrl = URL.createObjectURL(file[0]);
+    function handleChangeImg(img) {
+        setActiveImg(img);
+    }
+    function handleFileInput(file) {
+        // console.log(file);
+        if (file.length != 0) {
+            let newUrl = URL.createObjectURL(file[0]);
             setActiveImg(newUrl);
-
-            if (type === 'book') {
-                setBookImg(file[0]);
-            } else if (type === 'author') {
-                setAuthorImage(file[0]);
-            } else if (type === 'publisher') {
-                setPublisherImage(file[0]);
-            }
+            setBookImgFile(file[0]);
+            setBookImg((pre) => [...pre, newUrl]);
         }
     }
-
-    const handleChangeImg = (img) => {
-        setActiveImg(img);
-    };
 
     async function handleUploadImage(file, type) {
         if (!file) {
@@ -56,12 +53,12 @@ function BookForm() {
     }
 
     const handleSubmit = async () => {
-        const uploadedBookImage = await handleUploadImage(bookImg, 'books');
-        const uploadedPublisherImage = await handleUploadImage(publisherImage, 'publishers');
+        const uploadedBookImage = await handleUploadImage(bookImgFile, 'books');
+        const uploadedPublisherImage = await handleUploadImage(publisher.imgFile, 'publishers');
 
         const bookAuthors = await Promise.all(
             authors.map(async (author) => {
-                const uploadedAuthorImage = await handleUploadImage(author.img, 'authors');
+                const uploadedAuthorImage = await handleUploadImage(author.imgFile, 'authors');
                 return {
                     authorFullName: author.name,
                     authorIntroduce: author.introduce,
@@ -76,7 +73,7 @@ function BookForm() {
             bookQuantity: parseInt(quantity),
             bookImageLink: uploadedBookImage,
             category: {
-                categoryName: category.name,
+                categoryName: category,
                 categoryDescription: '',
             },
             publisher: {
@@ -87,10 +84,77 @@ function BookForm() {
             },
             authors: bookAuthors,
         };
-
+        BookService.createBook(postData).then((res) => {
+            console.log(res);
+        });
         console.log('Submit data:', postData);
         // Here you can send the postData to your API endpoint
     };
+
+    function handleChangeAuthor(id, key, value) {
+        setAuthors((pre) => {
+            pre[id][key] = value;
+            return [...pre];
+        });
+    }
+    function handleChangeAuthorImg(id, file) {
+        if (file.length != 0) {
+            let newUrl = URL.createObjectURL(file[0]);
+            setAuthors((pre) => {
+                pre[id]['img'] = newUrl;
+                pre[id]['imgFile'] = file[0];
+                return [...pre];
+            });
+        }
+    }
+    function handleChangePublisher(id, key, value) {
+        setPublisher((pre) => {
+            pre[key] = value;
+            return { ...pre };
+        });
+    }
+    function handleChangePublisherImg(id, file) {
+        if (file.length != 0) {
+            let newUrl = URL.createObjectURL(file[0]);
+            setPublisher((pre) => {
+                pre['img'] = newUrl;
+                pre['imgFile'] = file[0];
+                return { ...pre };
+            });
+        }
+    }
+    function handelAddAuthor(type) {
+        if (type == 'publisher') {
+            setPublisher((pre) => [...pre, { id: pre.length, name: null, introduce: null, img: null, imgFile: null }]);
+        } else if (type == 'author') {
+            setAuthors((pre) => [...pre, { id: pre.length, name: null, introduce: null, img: null, imgFile: null }]);
+        }
+    }
+
+    function deleteImg(type, id) {
+        // setAuthors((pre) => {
+        //     pre[id]['img'] = "";
+        //     return [...pre];
+        // });
+        if (type == 'publisher') {
+            setPublisher((pre) => {
+                pre['img'] = '';
+                pre['imgFile'] = '';
+                return [...pre];
+            });
+        } else if (type == 'author') {
+            setAuthors((pre) => {
+                pre[id]['img'] = '';
+                pre[id]['imgFile'] = '';
+                return [...pre];
+            });
+        } else {
+            setActiveImg('');
+            setBookImgFile(null);
+        }
+    }
+
+    console.log(authors, publisher);
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -98,7 +162,11 @@ function BookForm() {
                 <Grid item xs={6}>
                     <div className={clsx(styles.containerImg)}>
                         <div className={clsx(styles.wrapperPreview)}>
-                            {activeImg ? <PreviewImg src={activeImg} /> : <ImgInput onChangeFile={handleFileInput} />}
+                            {activeImg ? (
+                                <PreviewImg edit={() => deleteImg()} src={activeImg} />
+                            ) : (
+                                <ImgInput onChangeFile={handleFileInput} />
+                            )}
                         </div>
                     </div>
                 </Grid>
@@ -137,21 +205,39 @@ function BookForm() {
 
             <Divider />
             <h5 style={{ marginBottom: '12px' }}>Tác giả</h5>
-            {/* <Grid container>
+            <Grid container>
                 {authors.map((author, index) => (
                     <AuthorInput
                         author={author}
                         key={index}
                         handleChangeAuthor={handleChangeAuthor}
                         handleChangeAuthorImg={handleChangeAuthorImg}
+                        deleteImg={() => deleteImg('author', author.id)}
                     />
                 ))}
                 <Grid item xs={6}>
-                    <div className={clsx(styles.addAuthor)} onClick={handelAddAuthor}>
+                    <div className={clsx(styles.addAuthor)} onClick={() => handelAddAuthor('author')}>
                         <FontAwesomeIcon icon={faPlus} fontSize={'32px'} />
                     </div>
                 </Grid>
-            </Grid> */}
+            </Grid>
+            {/* note: author and publiser use same form  */}
+            <Divider />
+            <h5 style={{ marginBottom: '12px' }}>Nhà xuất bản</h5>
+            <Grid container>
+                <AuthorInput
+                    author={publisher}
+                    deleteImg={() => deleteImg('publisher')}
+                    handleChangeAuthor={handleChangePublisher}
+                    handleChangeAuthorImg={handleChangePublisherImg}
+                />
+
+                {/* <Grid item xs={6}>
+                    <div className={clsx(styles.addAuthor)} onClick={() => handelAddAuthor('publisher')}>
+                        <FontAwesomeIcon icon={faPlus} fontSize={'32px'} />
+                    </div>
+                </Grid> */}
+            </Grid>
             <Grid item xs={12} md={6} lg={9}></Grid>
             <Grid item xs={12} md={6} lg={3}>
                 <div className={clsx(styles.submitBtn)}>

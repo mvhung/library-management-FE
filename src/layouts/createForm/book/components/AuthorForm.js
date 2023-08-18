@@ -10,22 +10,15 @@ import ImgInput from './ImgInput';
 import styles from '../BookForm.module.css';
 import styles2 from './Book.module.scss';
 import clsx from 'clsx';
-function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg }) {
+function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg, deleteImg }) {
     return (
         <Grid item xs={6}>
             <div className={clsx(styles.wrapForm)}>
                 <div className={clsx(styles.containerImg)}>
                     <div className={clsx(styles.wrapperPreview)} style={{ height: '112px', marginRight: '12px' }}>
                         {author.img ? (
-                            <PreviewImg src={author.img} style={{ height: '100%' }} />
+                            <PreviewImg edit={() => deleteImg()} src={author.img} style={{ height: '100%' }} />
                         ) : (
-                            // <ImgInput
-                            //     mini
-                            //     authorId={author.id}
-                            //     onChangeFile={handleChangeAuthorImg}
-                            //     style={{ height: '112px' }}
-                            // />
-                            // <input type="file" onChange={(e) => handleChangeAuthorImg(author.id, e.target.files)} />
                             <div className={clsx(styles2.wrapper, styles2.inputMini)} style={{ height: '112px' }}>
                                 <div className={clsx(styles2.fileUpload)}>
                                     <input
@@ -43,12 +36,11 @@ function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg }) {
                     <TextField
                         required
                         id="outlined-required"
-                        label="Tên tác giả"
+                        label="Tên"
                         onChange={(e) => handleChangeAuthor(author.id, 'name', e.target.value)}
                     />
                     <TextField
-                        required
-                        id="outlined-required"
+                        id="outlined"
                         label="Giới thiệu"
                         onChange={(e) => handleChangeAuthor(author.id, 'introduce', e.target.value)}
                     />
@@ -64,4 +56,5 @@ AuthorInput.propTypes = {
     author: PropTypes.object.isRequired,
     handleChangeAuthor: PropTypes.func,
     handleChangeAuthorImg: PropTypes.func,
+    deleteImg: PropTypes.func,
 };
