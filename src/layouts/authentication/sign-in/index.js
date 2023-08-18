@@ -61,11 +61,6 @@ function SignIn() {
                 setMessage(resMessage);
             },
         );
-        // let data = {
-        //     username: 'maihung',
-        //     role: 'Admin',
-        // };
-        // localStorage.setItem('user', JSON.stringify(data));
     };
 
     return (
@@ -74,55 +69,56 @@ function SignIn() {
                 <SoftBox mb={2}>
                     <SoftBox mb={1} ml={0.5}>
                         <SoftTypography component="label" variant="caption" fontWeight="bold">
-                            Email
-                        </SoftTypography>
-                    </SoftBox>
+                            Email{' '}
+                        </SoftTypography>{' '}
+                    </SoftBox>{' '}
                     <SoftInput
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                    />
-                </SoftBox>
+                    />{' '}
+                </SoftBox>{' '}
                 <SoftBox mb={2}>
                     <SoftBox mb={1} ml={0.5}>
                         <SoftTypography component="label" variant="caption" fontWeight="bold">
-                            Password
-                        </SoftTypography>
-                    </SoftBox>
+                            Password{' '}
+                        </SoftTypography>{' '}
+                    </SoftBox>{' '}
                     <SoftInput
                         type="password"
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    />
-                </SoftBox>
+                    />{' '}
+                </SoftBox>{' '}
                 <SoftBox display="flex" alignItems="center">
-                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />
+                    <Switch checked={rememberMe} onChange={handleSetRememberMe} />{' '}
                     <SoftTypography
                         variant="button"
                         fontWeight="regular"
                         onClick={handleSetRememberMe}
                         sx={{ cursor: 'pointer', userSelect: 'none' }}
                     >
-                        &nbsp;&nbsp;Remember me
-                    </SoftTypography>
-                </SoftBox>
+                        & nbsp; & nbsp; Remember me{' '}
+                    </SoftTypography>{' '}
+                </SoftBox>{' '}
                 {message && (
                     <div className="form-group">
                         <div className="alert alert-danger" role="alert">
-                            {message}
-                        </div>
+                            {' '}
+                            {message}{' '}
+                        </div>{' '}
                     </div>
-                )}
+                )}{' '}
                 <SoftBox mt={4} mb={1}>
                     <SoftButton variant="gradient" color="info" fullWidth onClick={handleSubmit}>
                         sign in
-                    </SoftButton>
-                </SoftBox>
+                    </SoftButton>{' '}
+                </SoftBox>{' '}
                 <SoftBox mt={3} textAlign="center">
                     <SoftTypography variant="button" color="text" fontWeight="regular">
-                        Don&apos;t have an account?{' '}
+                        Don & apos; t have an account ?{' '}
                         <SoftTypography
                             component={Link}
                             to="/sign-up"
@@ -131,11 +127,11 @@ function SignIn() {
                             fontWeight="medium"
                             textGradient
                         >
-                            Sign up
-                        </SoftTypography>
-                    </SoftTypography>
-                </SoftBox>
-            </SoftBox>
+                            Sign up{' '}
+                        </SoftTypography>{' '}
+                    </SoftTypography>{' '}
+                </SoftBox>{' '}
+            </SoftBox>{' '}
         </CoverLayout>
     );
 }

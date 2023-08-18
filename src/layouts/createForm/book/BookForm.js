@@ -1,76 +1,98 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-import SoftBox from 'components/SoftBox';
-import SoftInput from 'components/SoftInput';
-import SoftTypography from 'components/SoftTypography';
-import SoftButton from 'components/SoftButton';
-import PageLayout from 'examples/LayoutContainers/PageLayout';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
-import { Box, Grid, TextField, Autocomplete, TextareaAutosize, Divider } from '@mui/material';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
-import styles from './BookForm.module.css';
-import { WrapInput } from 'utils';
-import PreviewImg from './components/PreviewImg';
-import BookImg from './components/BookImg';
-import { Pagination, Scrollbar, A11y } from 'swiper/modules';
-import ImgInput from './components/ImgInput';
+import { Grid, TextField, TextareaAutosize, Divider } from '@mui/material';
 import clsx from 'clsx';
-import { Height } from '@mui/icons-material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AuthorInput from './components/AuthorForm';
+import PreviewImg from './components/PreviewImg';
+import { uploadImageToS3 } from 'aws/uploadImageToS3';
+import DashboardNavbar from 'examples/Navbars/DashboardNavbar';
+import { WrapInput } from 'utils';
+import ImgInput from './components/ImgInput';
+import styles from './BookForm.module.css';
 
 function BookForm() {
     const [activeImg, setActiveImg] = useState('');
+
     const [bookImg, setBookImg] = useState('');
 
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState('');
-    const [quantity, setQuantity] = useState('');
-    const [authors, setAuthors] = useState([{ id: 0, name: 'ahh', introduce: 'haha', img: null }]);
-    const [publisher, setPublisher] = useState('');
-    const [category, setCategory] = useState('');
 
-    function handleChangeImg(img) {
-        setActiveImg(img);
-    }
+    const [description, setDescription] = useState('');
+
+    const [date, setDate] = useState('');
+
+    const [quantity, setQuantity] = useState('');
+
+    const [authors, setAuthors] = useState([{ name: '', introduce: '', img: null }]);
+
+    const [category, setCategory] = useState({ name: '', description: '' });
+
+    const [publisher, setPublisher] = useState({ name: '', introduce: '', img: null });
+
     function handleFileInput(file) {
-        // console.log(file);
         if (file.length != 0) {
             let newUrl = URL.createObjectURL(file[0]);
             setActiveImg(newUrl);
             setBookImg((pre) => [...pre, newUrl]);
         }
     }
-    function handleSubmit() {
-        let object = { title, description, date, quantity, authors, publisher, category };
-        console.log(object);
-    }
 
-    function handelAddAuthor() {
-        setAuthors((pre) => [...pre, { id: pre.length, name: null, introduce: null, img: null }]);
-    }
+    const handleChangeImg = (img) => {
+        setActiveImg(img);
+    };
 
-    function handleChangeAuthor(id, key, value) {
-        setAuthors((pre) => {
-            pre[id][key] = value;
-            return [...pre];
-        });
-    }
-    function handleChangeAuthorImg(id, file) {
-        console.log(file);
-        if (file.length != 0) {
-            let newUrl = URL.createObjectURL(file[0]);
-            setAuthors((pre) => {
-                pre[id]['img'] = newUrl;
-                return [...pre];
-            });
+    const handleSubmit = async () => {
+        if (bookImg) {
+            const uploadedBookImage = await uploadImageToS3(bookImg, 'books');
+            console.log('Uploaded book image:', uploadedBookImage);
         }
-    }
-    console.log(authors);
+
+        if (publisher.img) {
+            const uploadedPublisherImage = await uploadImageToS3(publisher.img, 'publishers');
+            setPublisherImageUrl(uploadedPublisherImage);
+            console.log('Uploaded publisher image:', uploadedPublisherImage);
+        }
+
+        const bookAuthors = authors.map(async (author) => {
+            if (author.img) {
+                const uploadedAuthorImage = await uploadImageToS3(author.img, 'authors');
+                return {
+                    authorFullName: author.name,
+                    authorIntroduce: author.introduce,
+                    authorImageUrl: uploadedAuthorImage,
+                };
+            } else {
+                return {
+                    authorFullName: author.name,
+                    authorIntroduce: author.introduce,
+                };
+            }
+        });
+
+        const postData = {
+            bookTitle: title,
+            bookDescription: description,
+            bookPublishedYear: parseInt(date.substring(0, 4)),
+            bookQuantity: parseInt(quantity),
+            bookImageLink: uploadedBookImages,
+            category: {
+                categoryName: category.name,
+                categoryDescription: '',
+            },
+            publisher: {
+                publisherName: publisher.name,
+                publisherIntroduce: publisher.introduce,
+                publisherWebsiteUrl: '',
+                publisherImageUrl: publisher.img,
+            },
+            authors: bookAuthors,
+        };
+
+        console.log('Submit data:', postData);
+        // Here you can send the postData to your API endpoint
+    };
     return (
         <DashboardLayout>
             <DashboardNavbar />
@@ -80,20 +102,6 @@ function BookForm() {
                         <div className={clsx(styles.wrapperPreview)}>
                             {activeImg ? <PreviewImg src={activeImg} /> : <ImgInput onChangeFile={handleFileInput} />}
                         </div>
-
-                        {/* <Swiper modules={[Pagination, Scrollbar, A11y]} spaceBetween={20} slidesPerView={'auto'}>
-                            {bookImg.map((img, index) => (
-                                <SwiperSlide key={index} onClick={() => handleChangeImg(img)}>
-                                    <BookImg src={img} active={img == activeImg} />
-                                </SwiperSlide>
-                            ))}
-
-                            {activeImg && (
-                                <SwiperSlide style={{ paddingRight: '36px' }}>
-                                    <ImgInput onChangeFile={handleFileInput} mini />
-                                </SwiperSlide>
-                            )}
-                        </Swiper> */}
                     </div>
                 </Grid>
                 <Grid item xs={6}>
@@ -124,14 +132,14 @@ function BookForm() {
                             placeholder="description"
                             onChange={(e) => setDescription(e.target.value)}
                         />
-
                         <TextField id="outlined" onChange={(e) => setCategory(e.target.value)} label="Thể loại" />
                     </div>
                 </Grid>
             </Grid>
+
             <Divider />
             <h5 style={{ marginBottom: '12px' }}>Tác giả</h5>
-            <Grid container>
+            {/* <Grid container>
                 {authors.map((author, index) => (
                     <AuthorInput
                         author={author}
@@ -145,7 +153,7 @@ function BookForm() {
                         <FontAwesomeIcon icon={faPlus} fontSize={'32px'} />
                     </div>
                 </Grid>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={6} lg={9}></Grid>
             <Grid item xs={12} md={6} lg={3}>
                 <div className={clsx(styles.submitBtn)}>

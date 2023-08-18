@@ -64,91 +64,73 @@ import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
 import Book from './components/book/Book';
 import { BooksContainer } from './components/book';
-// const data = {category:}
-const books = [
-    {
-        id: 1,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.z2Aq2mlLMtDAXQS8b_SZTwHaKF?pid=ImgDet&rs=1',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
-    {
-        id: 2,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://i.pinimg.com/736x/4e/2e/2c/4e2e2cd916defe47bd382182f55d5c25.jpg',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
-    {
-        id: 3,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://th.bing.com/th/id/OIP.z2Aq2mlLMtDAXQS8b_SZTwHaKF?pid=ImgDet&rs=1',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
-    {
-        id: 4,
-        title: 'gone by the wind',
-        category: ['kinh dị', 'tình cảm'],
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi dicta illo earum?',
-        image: 'https://marketplace.canva.com/EAFaLQ-J2hY/1/9/1131w/canva-black-modern-employee-handbook-booklet-HlgaYfk8wVw.jpg',
-        authors: [
-            { image: 'https://th.bing.com/th/id/OIP.kinS5zmi8bqXuJHP--CfwQHaE7?pid=ImgDet&rs=1', name: 'Rowling' },
-        ],
-    },
-];
+
+import React, { useEffect, useState } from 'react';
+
+import BookService from 'services/book.service';
+import AuthService from 'services/auth.service';
 
 function Home() {
     const { size } = typography;
     const { chart, items } = reportsBarChartData;
+    const [booksByCategory, setBooksByCategory] = useState([]);
+    const [user, setUser] = useState({});
 
+    useEffect(() => {
+        const fetchBooksByCategory = async () => {
+            try {
+                const categories = await BookService.getCategories();
+                const booksData = await Promise.all(
+                    categories.map(async (category) => {
+                        const booksInCategory = await BookService.getBooksByCategoryId(category.categoryId);
+                        return { category, books: booksInCategory };
+                    }),
+                );
+                setBooksByCategory(booksData);
+            } catch (error) {
+                console.error('Error fetching books by category:', error);
+            }
+        };
+
+        const fetchUserInfo = async (user) => {
+            try {
+                user = await AuthService.getCurrentUser();
+                setUser(user);
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
+
+        fetchBooksByCategory();
+        fetchUserInfo();
+    }, []);
     return (
         <DashboardLayout>
             <DashboardNavbar />
-
-            <BooksContainer category={'kinh dị'}>
-                <SoftBox p={2}>
-                    <Swiper slidesPerView={4} spaceBetween={30}>
-                        {books.map((book) => (
-                            <SwiperSlide height={'300px'} key={book.id}>
-                                <Book book={book} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </SoftBox>
-            </BooksContainer>
-            <BooksContainer category={'kinh dị'}>
-                <SoftBox p={2}>
-                    <Swiper slidesPerView={4} spaceBetween={30}>
-                        {books.map((book) => (
-                            <SwiperSlide height={'300px'} key={book.id}>
-                                <Book book={book} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </SoftBox>
-            </BooksContainer>
-            <BooksContainer category={'kinh dị'}>
-                <SoftBox p={2}>
-                    <Swiper slidesPerView={4} spaceBetween={30}>
-                        {books.map((book) => (
-                            <SwiperSlide height={'300px'} key={book.id}>
-                                <Book book={book} />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </SoftBox>
-            </BooksContainer>
+            <SoftBox p={2}>
+                {' '}
+                {booksByCategory.length > 0 ? (
+                    booksByCategory.map((categoryData) => (
+                        <BooksContainer
+                            key={categoryData.category.categoryId}
+                            category={categoryData.category.categoryName}
+                        >
+                            <SoftBox p={2}>
+                                <Swiper slidesPerView={4} spaceBetween={30}>
+                                    {' '}
+                                    {categoryData.books.map((book) => (
+                                        <SwiperSlide key={book.bookId} style={{ height: '300px' }}>
+                                            <Book book={book} />{' '}
+                                        </SwiperSlide>
+                                    ))}{' '}
+                                </Swiper>{' '}
+                            </SoftBox>{' '}
+                        </BooksContainer>
+                    ))
+                ) : (
+                    <p> Không có dữ liệu sách. </p>
+                )}{' '}
+            </SoftBox>{' '}
         </DashboardLayout>
     );
 }

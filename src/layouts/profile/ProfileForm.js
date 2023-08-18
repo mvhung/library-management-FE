@@ -29,7 +29,6 @@ function ProfileForm() {
         // password: null,
     });
 
-    // const [activeImg, setActiveImg] = useState();
     const [avatar, setAvatar] = useState();
 
     const [username, setUsername] = useState();
@@ -73,8 +72,8 @@ function ProfileForm() {
             },
         );
     }
+
     function handleFileInput(file) {
-        // console.log(file);
         if (file.length != 0) {
             let newUrl = URL.createObjectURL(file[0]);
 
@@ -89,14 +88,15 @@ function ProfileForm() {
                 <Grid item xs={6}>
                     <div className={clsx(styles2.containerImg)}>
                         <div className={clsx(styles2.wrapperPreview)}>
+                            {' '}
                             {avatarUrl ? (
                                 <PreviewImg src={avatarUrl} edit />
                             ) : (
                                 <BookImgInput onChangeFile={handleFileInput} />
-                            )}
-                        </div>
-                    </div>
-                </Grid>
+                            )}{' '}
+                        </div>{' '}
+                    </div>{' '}
+                </Grid>{' '}
                 <Grid item xs={6}>
                     <div className={clsx(styles.wrapperInput)}>
                         <TextField
@@ -110,7 +110,7 @@ function ProfileForm() {
                             id="outlined-required"
                             label="User Name"
                             onChange={(e) => setUsername(e.target.value)}
-                        />
+                        />{' '}
                         <div style={{ margin: 0, display: 'flex', justifyContent: 'space-between' }}>
                             <TextField
                                 autocomplete="off"
@@ -123,7 +123,7 @@ function ProfileForm() {
                                 label="First Name"
                                 // type="datetime-local"
                                 onChange={(e) => setFirstName(e.target.value)}
-                            />
+                            />{' '}
                             <TextField
                                 autocomplete="off"
                                 InputLabelProps={{
@@ -137,8 +137,7 @@ function ProfileForm() {
                                 label="Last Name"
                                 // type="number"
                             />
-                        </div>
-
+                        </div>{' '}
                         <TextField
                             autocomplete="off"
                             InputLabelProps={{
@@ -176,15 +175,17 @@ function ProfileForm() {
                             onChange={(e) => setAddress(e.target.value)}
                             label="Address"
                         />
-                    </div>
-                </Grid>
-                <Grid item xs={12} md={6} lg={9}></Grid>
+                    </div>{' '}
+                </Grid>{' '}
+                <Grid item xs={12} md={6} lg={9}>
+                    {' '}
+                </Grid>{' '}
                 <Grid item xs={12} md={6} lg={3}>
                     <div className={clsx(styles.submitBtn)}>
-                        <button onClick={handleSubmit}>Submit</button>
-                    </div>
-                </Grid>
-            </Grid>
+                        <button onClick={handleSubmit}> Submit </button>{' '}
+                    </div>{' '}
+                </Grid>{' '}
+            </Grid>{' '}
         </DashboardLayout>
     );
 }

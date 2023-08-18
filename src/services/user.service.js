@@ -8,7 +8,7 @@ const getUser = async () => {
         const response = await axios.get(API_URL + 'user-info', {
             headers: authHeader(),
         });
-        // console.log(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.error('Error fetching current user:', error);

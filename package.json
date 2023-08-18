@@ -13,6 +13,8 @@
         "url": "git+https://github.com/creativetimofficial/soft-ui-dashboard-react.git"
     },
     "dependencies": {
+        "@aws-sdk/client-s3": "^3.391.0",
+        "@aws-sdk/lib-storage": "^3.391.0",
         "@emotion/cache": "11.11.0",
         "@emotion/react": "11.11.0",
         "@emotion/styled": "11.11.0",

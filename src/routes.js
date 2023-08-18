@@ -97,7 +97,7 @@ const routes = [
         type: null,
         name: 'Book',
         key: 'book-infor',
-        route: 'view/book/:id',
+        route: 'book/:bookId',
         icon: <Cube size="12px" />,
         component: <Book />,
         noCollapse: true,
