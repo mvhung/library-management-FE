@@ -37,7 +37,7 @@ const getBookById = async (bookId) => {
 };
 
 const searchBook = (key) => {
-    return axios.get(API_URL + 'search', {
+    return axios.get(API_URL + 'books/search', {
         params: {
             keyword: String(key),
         },

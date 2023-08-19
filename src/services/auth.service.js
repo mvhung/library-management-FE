@@ -26,8 +26,9 @@ const login = (email, password) => {
 };
 
 const logout = () => {
-    localStorage.removeItem('token');
     return axios.post(API_URL + 'logout').then((response) => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         return response.data;
     });
 };

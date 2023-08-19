@@ -10,7 +10,6 @@ function Search() {
     const [valueSearch, setValueSearch] = useState('');
     const [showResult, setShowResult] = useState(false);
     const [loading, setLoading] = useState(false);
-
     const debounceValue = useDebounce(valueSearch, 500);
 
     const inputRef = useRef();
@@ -25,7 +24,9 @@ function Search() {
             try {
                 setLoading(true);
                 const result = await BookService.searchBook(debounceValue);
-                setResultsSearch(result.data);
+                console.log(result);
+                setResultsSearch(result.data.content);
+
                 setLoading(false);
             } catch (error) {
                 setLoading(false);
@@ -55,6 +56,7 @@ function Search() {
         setShowResult(false);
     };
 
+    console.log(resultsSearch);
     return (
         <div>
             <HeadlessTippy

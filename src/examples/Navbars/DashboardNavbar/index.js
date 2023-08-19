@@ -56,10 +56,11 @@ import UserService from 'services/user.service';
 import AuthService from 'services/auth.service';
 import { MenuItem } from '@mui/material';
 import Search from 'components/Search/Search';
+import { useNavigate } from 'react-router-dom';
 
 function DashboardNavbar({ absolute, light, isMini }) {
     const [user, setUser] = useState();
-
+    const navigate = useNavigate();
     useEffect(() => {
         UserService.getUser().then((res) => {
             setUser(res);
@@ -105,6 +106,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     const handleLogout = () => {
         AuthService.logout();
+        navigate('/home');
         window.location.reload();
     };
 
@@ -122,13 +124,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
             sx={{ mt: 2 }}
         >
             <MenuItem>
-                <Link to="/profile">Profile</Link>
-            </MenuItem>
+                <Link to="/profile"> Profile </Link>{' '}
+            </MenuItem>{' '}
             <MenuItem>
                 <p onClick={handleLogout} to="/authentication/log-out">
-                    Log out
-                </p>
-            </MenuItem>
+                    Log out{' '}
+                </p>{' '}
+            </MenuItem>{' '}
         </Menu>
     );
 
@@ -140,24 +142,21 @@ function DashboardNavbar({ absolute, light, isMini }) {
         >
             <Toolbar sx={(theme) => navbarContainer(theme)}>
                 <SoftBox color="inherit" mb={{ xs: 1, md: 0 }} sx={(theme) => navbarRow(theme, { isMini })}>
-                    <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />
-                </SoftBox>
+                    <Breadcrumbs icon="home" title={route[route.length - 1]} route={route} light={light} />{' '}
+                </SoftBox>{' '}
                 {isMini ? null : (
                     <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
                         <SoftBox pr={1}>
-                            {/* <SoftInput
-                                placeholder="Search some book..."
-                                icon={{ component: 'search', direction: 'left' }}
-                            /> */}
                             <Search />
-                        </SoftBox>
+                        </SoftBox>{' '}
                         <SoftBox style={{ display: 'flex' }} color={light ? 'white' : 'inherit'}>
+                            {' '}
                             {user ? (
                                 <h4
                                     style={{ fontSize: '14px', padding: '8px', cursor: 'pointer', userSelect: 'none' }}
                                     onClick={handleOpenMenu}
                                 >
-                                    {user.username}
+                                    {user.username}{' '}
                                 </h4>
                             ) : (
                                 <Link to="/sign-in">
@@ -167,30 +166,29 @@ function DashboardNavbar({ absolute, light, isMini }) {
                                                 color: light ? white.main : dark.main,
                                             })}
                                         >
-                                            account_circle
-                                        </Icon>
+                                            account_circle{' '}
+                                        </Icon>{' '}
                                         <SoftTypography
                                             variant="button"
                                             fontWeight="medium"
                                             color={light ? 'white' : 'dark'}
                                         >
                                             Sign in
-                                        </SoftTypography>
-                                    </IconButton>
+                                        </SoftTypography>{' '}
+                                    </IconButton>{' '}
                                 </Link>
-                            )}
-
+                            )}{' '}
                             <IconButton size="small" color="inherit" sx={navbarMobileMenu} onClick={handleMiniSidenav}>
                                 <Icon className={light ? 'text-white' : 'text-dark'}>
-                                    {miniSidenav ? 'menu_open' : 'menu'}
-                                </Icon>
-                            </IconButton>
-
-                            {renderMenu()}
-                        </SoftBox>
+                                    {' '}
+                                    {miniSidenav ? 'menu_open' : 'menu'}{' '}
+                                </Icon>{' '}
+                            </IconButton>{' '}
+                            {renderMenu()}{' '}
+                        </SoftBox>{' '}
                     </SoftBox>
-                )}
-            </Toolbar>
+                )}{' '}
+            </Toolbar>{' '}
         </AppBar>
     );
 }
