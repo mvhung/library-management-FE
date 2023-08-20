@@ -54,7 +54,7 @@ import SpaceShip from 'examples/Icons/SpaceShip';
 import BookForm from 'layouts/createForm/book/BookForm';
 import Cube from 'examples/Icons/Cube';
 import Book from 'layouts/createForm/book/Book';
-import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
+// import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
 import ProfileForm from 'layouts/profile/ProfileForm';
 import UserManager from 'layouts/user/UserManager';
 const routes = [
@@ -121,15 +121,15 @@ const routes = [
         component: <UserManager />,
         noCollapse: true,
     },
-    // {
-    //     type: null,
-    //     name: 'Book form update',
-    //     key: 'book-form-update',
-    //     route: 'update/book/:id',
-    //     icon: <Cube size="12px" />,
-    //     component: <BookFormUpdate />,
-    //     noCollapse: true,
-    // },
+    {
+        type: null,
+        name: 'Book form update',
+        key: 'book-form-update',
+        route: 'update/book/:id',
+        icon: <Cube size="12px" />,
+        component: <BookForm />,
+        noCollapse: true,
+    },
     {
         type: null,
         name: 'profile update',
