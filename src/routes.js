@@ -56,6 +56,7 @@ import Cube from 'examples/Icons/Cube';
 import Book from 'layouts/createForm/book/Book';
 import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
 import ProfileForm from 'layouts/profile/ProfileForm';
+import UserManager from 'layouts/user/UserManager';
 const routes = [
     // {
     //     type: 'collapse',
@@ -112,14 +113,23 @@ const routes = [
         noCollapse: true,
     },
     {
-        type: null,
-        name: 'Book form update',
-        key: 'book-form-update',
-        route: 'update/book/:id',
+        type: 'Admin',
+        name: 'User table',
+        key: 'all-users',
+        route: 'manage/user',
         icon: <Cube size="12px" />,
-        component: <BookFormUpdate />,
+        component: <UserManager />,
         noCollapse: true,
     },
+    // {
+    //     type: null,
+    //     name: 'Book form update',
+    //     key: 'book-form-update',
+    //     route: 'update/book/:id',
+    //     icon: <Cube size="12px" />,
+    //     component: <BookFormUpdate />,
+    //     noCollapse: true,
+    // },
     {
         type: null,
         name: 'profile update',
