@@ -25,8 +25,16 @@ import CategoryBtn from '../category/categoryBtn';
 import { useParams } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import BookService from 'services/book.service';
+import UserService from 'services/user.service';
+import EditBtn from './components/EditBtn';
 function Book() {
     const { bookId } = useParams();
+    const [user, setUser] = useState({ roleName: null });
+    useEffect(() => {
+        UserService.getUser().then((res) => {
+            setUser(res);
+        });
+    }, []);
     const [bookDetail, setBookDetail] = useState(null);
     const [activeImg, setActiveImg] = useState('');
     const [bookImg, setBookImg] = useState('');
@@ -110,6 +118,7 @@ function Book() {
 
                         <div className={clsx(styles.submitBtn)} style={{ marginTop: '32px' }}>
                             <button onClick={handleSubmit}>Rent Now</button>
+                            {user.roleName == 'ADMIN' && <EditBtn id={bookId} />}
                         </div>
 
                         <div className={clsx(styles.wrapCategory)}>

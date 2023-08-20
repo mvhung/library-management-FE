@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DashboardLayout from 'examples/LayoutContainers/DashboardLayout';
 import { Grid, TextField, TextareaAutosize, Divider } from '@mui/material';
 import clsx from 'clsx';
@@ -12,8 +12,11 @@ import { WrapInput } from 'utils';
 import ImgInput from './components/ImgInput';
 import styles from './BookForm.module.css';
 import BookService from 'services/book.service';
+import { useParams } from 'react-router-dom';
 
 function BookForm() {
+    const { id } = useParams();
+
     const [activeImg, setActiveImg] = useState('');
     const [bookImg, setBookImg] = useState('');
     const [bookImgFile, setBookImgFile] = useState();
@@ -27,8 +30,11 @@ function BookForm() {
     const [category, setCategory] = useState('');
     const [publisher, setPublisher] = useState({ id: 0, name: '', introduce: '', img: null, imgFile: null });
 
-    const [authorImage, setAuthorImage] = useState('');
-    const [publisherImage, setPublisherImage] = useState('');
+    useEffect(() => {
+        BookService.getBookById(id).then((res) => {
+            // setActiveImg()
+        });
+    }, [id]);
 
     function handleChangeImg(img) {
         setActiveImg(img);
