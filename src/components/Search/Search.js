@@ -4,6 +4,8 @@ import SoftInput from 'components/SoftInput';
 
 import { useDebounce } from 'hooks';
 import BookService from 'services/book.service';
+import SearchItem from './components/SearchItem';
+import SearchResult from './components/SearchResult';
 
 function Search() {
     const [resultsSearch, setResultsSearch] = useState([]);
@@ -64,33 +66,22 @@ function Search() {
                 interactive={true}
                 render={(attrs) => (
                     <div className={''} tabIndex="-1" {...attrs}>
-                        <div style={{ position: 'absolute' }}>
+                        <SearchResult>
                             {resultsSearch.map((item, index) => (
-                                <div key={index}>
-                                    <img src={item.bookImageLink} />
-                                    <div>
-                                        <h4>{item.bookTitle}</h4>
-                                        <p>{item.bookPublishedYear}</p>
-                                    </div>
-                                </div>
+                                <SearchItem
+                                    key={index}
+                                    id={item.bookId}
+                                    title={item.bookTitle}
+                                    publishYear={item.bookPublishedYear}
+                                    img={item.bookImageLink}
+                                />
                             ))}
-                        </div>
+                        </SearchResult>
                     </div>
                 )}
                 onClickOutside={handleHideResult}
             >
                 <div className={''}>
-                    {/* <input
-                        placeholder="Search accounts and videos"
-                        className={cx('input')}
-                        value={valueSearch}
-                        spellCheck={false}
-                        ref={inputRef}
-                        onChange={handleChange}
-                        onFocus={() => {
-                            setShowResult(true);
-                        }}
-                    /> */}
                     <SoftInput
                         placeholder="Search some book..."
                         icon={{ component: 'search', direction: 'left', onMouseDown: (e) => e.preventDefault() }}
@@ -102,10 +93,6 @@ function Search() {
                             setShowResult(true);
                         }}
                     />
-
-                    {/* <button className={cx('btn-search')} onMouseDown={(e) => e.preventDefault()}>
-                        <SearchIcon />
-                    </button> */}
                 </div>
             </HeadlessTippy>
         </div>
