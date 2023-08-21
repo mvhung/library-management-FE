@@ -101,9 +101,7 @@
         width: 100%;
         overflow: hidden;
     }
-    &:hover .previewImg {
-        opacity: 0.6;
-    }
+
     &:hover .deleteBtn {
         bottom: 0;
         // display: flex;
@@ -153,7 +151,11 @@
         font-size: 32px;
     }
 }
-
+.editMode {
+    &:hover .previewImg {
+        opacity: 0.6;
+    }
+}
 .editBtn {
     // background-color: #2590eb;
     padding: 6px;

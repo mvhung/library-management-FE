@@ -160,7 +160,6 @@ function BookForm() {
         }
     }
 
-    console.log(authors, publisher);
     return (
         <DashboardLayout>
             <DashboardNavbar />

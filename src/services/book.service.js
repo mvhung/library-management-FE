@@ -22,8 +22,7 @@ const getBooksByCategoryId = async (categoryId) => {
 };
 
 const getBookById = async (bookId) => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    {
         try {
             const response = await axios.get(API_URL + 'books/' + bookId);
             return response.data;
@@ -31,8 +30,6 @@ const getBookById = async (bookId) => {
             console.error('Error fetching books:', error);
             throw error;
         }
-    } else {
-        return null;
     }
 };
 
