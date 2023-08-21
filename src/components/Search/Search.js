@@ -58,7 +58,6 @@ function Search() {
         setShowResult(false);
     };
 
-    console.log(resultsSearch);
     return (
         <div>
             <HeadlessTippy

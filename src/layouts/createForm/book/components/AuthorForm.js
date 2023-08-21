@@ -11,6 +11,7 @@ import styles from '../BookForm.module.css';
 import styles2 from './Book.module.scss';
 import clsx from 'clsx';
 function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg, deleteImg }) {
+    console.log(author);
     return (
         <Grid item xs={6}>
             <div className={clsx(styles.wrapForm)}>
@@ -35,12 +36,24 @@ function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg, delete
                 <div className={clsx(styles.wrapperInput)}>
                     <TextField
                         required
+                        autoComplete="off"
+                        // defaultValue={category}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        value={author.name}
                         id="outlined-required"
                         label="Tên"
                         onChange={(e) => handleChangeAuthor(author.id, 'name', e.target.value)}
                     />
                     <TextField
                         id="outlined"
+                        autoComplete="off"
+                        // defaultValue={category}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        value={author.introduce}
                         label="Giới thiệu"
                         onChange={(e) => handleChangeAuthor(author.id, 'introduce', e.target.value)}
                     />

@@ -31,9 +31,38 @@ function BookForm() {
     const [publisher, setPublisher] = useState({ id: 0, name: '', introduce: '', img: null, imgFile: null });
 
     useEffect(() => {
-        BookService.getBookById(id).then((res) => {
-            // setActiveImg()
-        });
+        if (id) {
+            BookService.getBookById(id).then((res) => {
+                // setActiveImg()
+                if (res) {
+                    setActiveImg(res.bookImageLink);
+                    setCategory(res.category.categoryName);
+                    setDate(res.bookPublishedYear);
+                    setDescription(res.bookDescription);
+                    setTitle(res.bookTitle);
+                    setQuantity(res.bookQuantity);
+                    setPublisher((pre) => {
+                        pre.name = res.publisher.publisherName;
+                        pre.introduce = res.publisher.publisherIntroduce;
+                        pre.img = res.publisher.publisherImageUrl;
+                        return { ...pre };
+                    });
+                    setAuthors((pre) => {
+                        pre = [];
+                        res.authors.map((author, index) =>
+                            pre.push({
+                                id: index,
+                                name: author.authorFullName,
+                                introduce: author.authorIntroduce,
+                                img: author.authorImageUrl,
+                                imgFile: null,
+                            }),
+                        );
+                        return [...pre];
+                    });
+                }
+            });
+        }
     }, [id]);
 
     function handleChangeImg(img) {
@@ -59,9 +88,11 @@ function BookForm() {
     }
 
     const handleSubmit = async () => {
-        const uploadedBookImage = await handleUploadImage(bookImgFile, 'books');
-        const uploadedPublisherImage = await handleUploadImage(publisher.imgFile, 'publishers');
+        let uploadedBookImage;
+        let uploadedPublisherImage;
 
+        uploadedBookImage = await handleUploadImage(bookImgFile, 'books');
+        uploadedPublisherImage = await handleUploadImage(publisher.imgFile, 'publishers');
         const bookAuthors = await Promise.all(
             authors.map(async (author) => {
                 const uploadedAuthorImage = await handleUploadImage(author.imgFile, 'authors');
@@ -94,6 +125,61 @@ function BookForm() {
             console.log(res);
         });
         console.log('Submit data:', postData);
+        // Here you can send the postData to your API endpoint
+    };
+
+    const handleUpdate = async () => {
+        let uploadedBookImage;
+        let uploadedPublisherImage;
+
+        if (bookImgFile) {
+            uploadedBookImage = await handleUploadImage(bookImgFile, 'books');
+        } else {
+            uploadedBookImage = activeImg;
+        }
+        if (publisher.imgFile) {
+            uploadedPublisherImage = await handleUploadImage(publisher.imgFile, 'publishers');
+        } else {
+            uploadedPublisherImage = publisher.img;
+        }
+
+        const bookAuthors = await Promise.all(
+            authors.map(async (author, index) => {
+                let uploadedAuthorImage;
+                if (author.imgFile) {
+                    uploadedAuthorImage = await handleUploadImage(author.imgFile, 'authors');
+                } else {
+                    uploadedAuthorImage = author.img;
+                }
+                return {
+                    authorFullName: author.name,
+                    authorIntroduce: author.introduce,
+                    authorImageUrl: uploadedAuthorImage,
+                };
+            }),
+        );
+        const postData2 = {
+            bookTitle: title,
+            bookDescription: description,
+            bookPublishedYear: parseInt((date + '     ').substring(0, 4)),
+            bookQuantity: parseInt(quantity),
+            bookImageLink: uploadedBookImage,
+            category: {
+                categoryName: category,
+                categoryDescription: '',
+            },
+            publisher: {
+                publisherName: publisher.name,
+                publisherIntroduce: publisher.introduce,
+                publisherWebsiteUrl: '',
+                publisherImageUrl: uploadedPublisherImage,
+            },
+            authors: bookAuthors,
+        };
+        BookService.updateBook(id, postData2).then((res) => {
+            console.log(res);
+        });
+        console.log('Submit data:', postData2);
         // Here you can send the postData to your API endpoint
     };
 
@@ -146,7 +232,7 @@ function BookForm() {
             setPublisher((pre) => {
                 pre['img'] = '';
                 pre['imgFile'] = '';
-                return [...pre];
+                return { ...pre };
             });
         } else if (type == 'author') {
             setAuthors((pre) => {
@@ -179,6 +265,12 @@ function BookForm() {
                     <div className={clsx(styles.wrapperInput)}>
                         <TextField
                             required
+                            autoComplete="off"
+                            // defaultValue={title}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={title}
                             id="outlined-required"
                             label="Tên sách"
                             onChange={(e) => setTitle(e.target.value)}
@@ -189,9 +281,21 @@ function BookForm() {
                                 label="Năm xuất bản"
                                 type="datetime-local"
                                 onChange={(e) => setDate(e.target.value)}
+                                autoComplete="off"
+                                // defaultValue={date}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                value={date}
                             />
                             <TextField
                                 required
+                                autoComplete="off"
+                                // defaultValue={quantity}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                value={quantity}
                                 id="outlined-number-required"
                                 onChange={(e) => setQuantity(e.target.value)}
                                 label="Số lượng"
@@ -199,11 +303,22 @@ function BookForm() {
                             />
                         </div>
                         <TextareaAutosize
+                            value={description}
                             minRows={10}
                             placeholder="description"
                             onChange={(e) => setDescription(e.target.value)}
                         />
-                        <TextField id="outlined" onChange={(e) => setCategory(e.target.value)} label="Thể loại" />
+                        <TextField
+                            id="outlined"
+                            autoComplete="off"
+                            // defaultValue={category}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            label="Thể loại"
+                        />
                     </div>
                 </Grid>
             </Grid>
@@ -246,7 +361,11 @@ function BookForm() {
             <Grid item xs={12} md={6} lg={9}></Grid>
             <Grid item xs={12} md={6} lg={3}>
                 <div className={clsx(styles.submitBtn)}>
-                    <button onClick={handleSubmit}>Submit</button>
+                    {id ? (
+                        <button onClick={handleUpdate}>Update</button>
+                    ) : (
+                        <button onClick={handleSubmit}>Submit</button>
+                    )}
                 </div>
             </Grid>
         </DashboardLayout>

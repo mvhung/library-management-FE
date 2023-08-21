@@ -123,7 +123,7 @@ function Book() {
 
                         <div className={clsx(styles.submitBtn)} style={{ marginTop: '32px' }}>
                             <button onClick={handleSubmit}>Rent Now</button>
-                            {userRole == 'ADMIN' && <EditBtn id={bookId} />}
+                            {userRole == 'ADMIN' && <EditBtn id={parseInt(bookId)} />}
                         </div>
 
                         <div className={clsx(styles.wrapCategory)}>

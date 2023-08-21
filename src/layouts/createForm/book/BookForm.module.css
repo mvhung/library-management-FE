@@ -38,6 +38,7 @@
 }
 .submitBtn button:hover {
     background-color: #2d8ee4;
+    cursor: pointer;
 }
 .submitBtn button {
     transition: opacity 0.15s ease-in-out;

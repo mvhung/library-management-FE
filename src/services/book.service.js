@@ -41,8 +41,8 @@ const searchBook = (key) => {
     });
 };
 
-const updateBook = (bookId) => {
-    return axios.get(API_URL + 'books' + bookId);
+const updateBook = (bookId, book) => {
+    return axios.put(API_URL + 'books/' + bookId, book, { headers: authHeader() });
 };
 
 const createBook = (book) => {
