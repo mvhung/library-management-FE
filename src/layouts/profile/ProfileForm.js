@@ -40,21 +40,25 @@ function ProfileForm() {
     const [avatarUrl, setAvatarUrl] = useState();
 
     useEffect(() => {
-        UserService.getUserById(id).then(
-            (res) => {
-                // setUser(res);
-                setUsername(res.username);
-                setFirstName(res.firstName);
-                setLastName(res.lastName);
-                setPassword(res.password);
-                setEmail(res.email);
-                setAddress(res.address);
-                setAvatarUrl(res.avatarUrl);
-            },
-            (error) => {
-                console.log(error);
-            },
-        );
+        if (id) {
+            UserService.getUserById(id).then(
+                (res) => {
+                    if (res) {
+                        // setUser(res);
+                        setUsername(res.username);
+                        setFirstName(res.firstName);
+                        setLastName(res.lastName);
+                        setPassword(res.password);
+                        setEmail(res.email);
+                        setAddress(res.address);
+                        setAvatarUrl(res.avatarUrl);
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                },
+            );
+        }
     }, []);
 
     function handleSubmit() {

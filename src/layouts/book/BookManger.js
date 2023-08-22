@@ -11,24 +11,26 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import UserService from 'services/user.service';
 import { useNavigate, useParams } from 'react-router-dom';
+import BookService from 'services/book.service';
 
-function UserManager() {
+function BookManager() {
     const [rows, setRows] = React.useState([]);
     // const {id} = useParams()
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        UserService.getUsers().then((res) => {
+        BookService.getBooks().then((res) => {
+            console.log(res);
             setRows((pre) => {
                 pre = [];
-                res.content.map((user) =>
+                res.content.map((book) =>
                     pre.push({
-                        id: user.userId,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        username: user.username,
-                        address: user.address,
-                        email: user.email,
+                        id: book.bookId,
+                        bookTitle: book.bookTitle,
+                        bookPublishedYear: book.bookPublishedYear,
+                        publisherName: book.publisher.publisherName,
+                        authors: book.authors.map((author) => author.authorFullName),
+                        bookQuantity: book.bookQuantity,
                     }),
                 );
                 return [...pre];
@@ -36,12 +38,12 @@ function UserManager() {
         });
     }, []);
     const handleEditClick = (id) => () => {
-        navigate('/edit/profile/' + id);
+        navigate('/update/book/' + id);
     };
 
     const handleDeleteClick = (id) => () => {
         // alert('Hello! I am an alert box!!');
-        UserService.deleteUser(id).then((res) => {
+        BookService.deleteBook(id).then((res) => {
             console.log(res);
         });
         setRows(rows.filter((row) => row.id !== id));
@@ -50,37 +52,37 @@ function UserManager() {
     const columns = [
         { field: 'id', headerName: 'ID', width: 90 },
         {
-            field: 'username',
-            headerName: 'User name',
+            field: 'bookTitle',
+            headerName: 'Title',
             width: 150,
             editable: true,
         },
         {
-            field: 'firstName',
-            headerName: 'First name',
+            field: 'bookPublishedYear',
+            headerName: 'Published year',
             width: 100,
             editable: true,
         },
         {
-            field: 'lastName',
-            headerName: 'Last name',
+            field: 'publisherName',
+            headerName: 'Publisher name',
             width: 100,
             editable: true,
         },
         {
-            field: 'email',
-            headerName: 'Email',
-            type: 'email',
-            width: 200,
+            field: 'authors',
+            headerName: 'Publisher name',
+            width: 100,
             editable: true,
         },
         {
-            field: 'address',
-            headerName: 'Address',
-            // type: 'email',
+            field: 'bookQuantity',
+            headerName: 'Quantity',
+            type: 'number',
             width: 200,
             editable: true,
         },
+
         {
             field: 'actions',
             type: 'actions',
@@ -108,6 +110,7 @@ function UserManager() {
             },
         },
     ];
+
     function EditToolbar() {
         return (
             <GridToolbarContainer>
@@ -115,7 +118,7 @@ function UserManager() {
                     color="primary"
                     startIcon={<AddIcon />}
                     onClick={() => {
-                        navigate('/create/user');
+                        navigate('/create/book');
                     }}
                     style={{ fontSize: '16px' }}
                 >
@@ -150,4 +153,4 @@ function UserManager() {
     );
 }
 
-export default UserManager;
+export default BookManager;

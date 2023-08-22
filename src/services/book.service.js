@@ -3,6 +3,11 @@ import authHeader from './auth.header.js';
 
 const API_URL = 'http://localhost:8080/api/v1/';
 
+const getBooks = () => {
+    return axios.get(API_URL + 'books').then((res) => {
+        return res.data;
+    });
+};
 const getCategories = async () => {
     try {
         const response = await axios.get(API_URL + 'categories?size=5');
@@ -74,6 +79,7 @@ const updateBookImg = (img) => {
 };
 
 const BookService = {
+    getBooks,
     getCategories,
     getBooksByCategoryId,
     getBookById,

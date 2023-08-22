@@ -11,7 +11,6 @@ import styles from '../BookForm.module.css';
 import styles2 from './Book.module.scss';
 import clsx from 'clsx';
 function AuthorInput({ author, handleChangeAuthor, handleChangeAuthorImg, deleteImg }) {
-    console.log(author);
     return (
         <Grid item xs={6}>
             <div className={clsx(styles.wrapForm)}>

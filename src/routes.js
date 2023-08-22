@@ -57,6 +57,7 @@ import Book from 'layouts/createForm/book/Book';
 // import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
 import ProfileForm from 'layouts/profile/ProfileForm';
 import UserManager from 'layouts/user/UserManager';
+import BookManager from 'layouts/book/BookManger';
 const routes = [
     // {
     //     type: 'collapse',
@@ -104,12 +105,21 @@ const routes = [
         noCollapse: true,
     },
     {
-        type: 'Admin',
+        type: null,
         name: 'Book form',
         key: 'book-form',
         route: 'create/book',
         icon: <Cube size="12px" />,
         component: <BookForm />,
+        noCollapse: true,
+    },
+    {
+        type: 'Admin',
+        name: 'Book table',
+        key: 'all-books',
+        route: 'manage/book',
+        icon: <Cube size="12px" />,
+        component: <BookManager />,
         noCollapse: true,
     },
     {
@@ -139,7 +149,15 @@ const routes = [
         component: <ProfileForm />,
         noCollapse: true,
     },
-
+    {
+        type: null,
+        name: 'create-user',
+        key: 'profile-update',
+        route: 'create/user',
+        icon: <Cube size="12px" />,
+        component: <ProfileForm />,
+        noCollapse: true,
+    },
     // { type: 'title', title: 'Account Pages', key: 'account-pages' },
     {
         type: null,

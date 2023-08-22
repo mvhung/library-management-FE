@@ -15,7 +15,18 @@ const getUser = async () => {
         return null;
     }
 };
-
+const getUsers = async () => {
+    try {
+        const response = await axios.get('http://localhost:8080/api/v1/users', {
+            headers: authHeader(),
+        });
+        localStorage.setItem('user', JSON.stringify(response.data));
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching current user:', error);
+        return null;
+    }
+};
 const getUserById = async (id) => {
     try {
         const response = await axios.get(API_URL + id, {
@@ -63,11 +74,17 @@ const updateUserAvatar = async (id, avatar) => {
         return null;
     }
 };
+
+const deleteUser = (id) => {
+    return axios.delete(API_URL + id, { headers: authHeader() });
+};
 const UserService = {
     getUser,
+    getUsers,
     updateUser,
     getUserById,
     updateUserAvatar,
+    deleteUser,
 };
 
 export default UserService;
