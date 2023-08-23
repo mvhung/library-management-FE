@@ -12,10 +12,11 @@ import { WrapInput } from 'utils';
 import ImgInput from './components/ImgInput';
 import styles from './BookForm.module.css';
 import BookService from 'services/book.service';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function BookForm() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [activeImg, setActiveImg] = useState('');
     const [bookImg, setBookImg] = useState('');
@@ -123,6 +124,7 @@ function BookForm() {
         };
         BookService.createBook(postData).then((res) => {
             console.log(res);
+            navigate('/home');
         });
         console.log('Submit data:', postData);
         // Here you can send the postData to your API endpoint
@@ -178,6 +180,7 @@ function BookForm() {
         };
         BookService.updateBook(id, postData2).then((res) => {
             console.log(res);
+            navigate('/home');
         });
         console.log('Submit data:', postData2);
         // Here you can send the postData to your API endpoint

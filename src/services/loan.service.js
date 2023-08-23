@@ -25,6 +25,17 @@ const getLoans = async () => {
         return null;
     }
 };
+const getMyLoans = async (id) => {
+    try {
+        const response = await axios.get(API_URL + '/info/' + id, {
+            headers: authHeader(),
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching current user:', error);
+        return null;
+    }
+};
 const deleteLoan = async () => {
     try {
         const response = await axios.get(API_URL + 'user-info', {
@@ -39,6 +50,7 @@ const deleteLoan = async () => {
 };
 const LoanService = {
     addLoan,
+    getMyLoans,
     getLoans,
     deleteLoan,
 };

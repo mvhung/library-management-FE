@@ -128,9 +128,9 @@ function LoanManager() {
                             },
                         },
                     }}
-                    slots={{
-                        toolbar: EditToolbar,
-                    }}
+                    // slots={{
+                    //     toolbar: EditToolbar,
+                    // }}
                     pageSizeOptions={[8]}
                     checkboxSelection
                     disableRowSelectionOnClick

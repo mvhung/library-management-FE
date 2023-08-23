@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal';
 import PropTypes from 'prop-types';
 import { TextField } from '@mui/material';
 import LoanService from 'services/loan.service';
+import { useNavigate } from 'react-router-dom';
 const style = {
     display: 'flex',
     alignItems: 'center',
@@ -36,10 +37,10 @@ const styleRentBtn = {
 export default function RentModal({ user, book, children }) {
     const [open, setOpen] = React.useState(false);
     const [rentNum, setRentNum] = React.useState(0);
-
+    const navigate = useNavigate();
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(user, book);
+
     const handleRent = () => {
         let postLoan = {
             user: { userId: user.userId },
@@ -50,7 +51,9 @@ export default function RentModal({ user, book, children }) {
                 },
             ],
         };
-        LoanService.addLoan([postLoan]);
+        LoanService.addLoan([postLoan]).then((res) => {
+            navigate('/home');
+        });
     };
 
     return (

@@ -59,13 +59,17 @@ import Search from 'components/Search/Search';
 import { useNavigate } from 'react-router-dom';
 
 function DashboardNavbar({ absolute, light, isMini }) {
-    const [user, setUser] = useState();
+    const [user, setUser] = useState({ userId: null });
     const navigate = useNavigate();
     useEffect(() => {
-        UserService.getUser().then((res) => {
-            setUser(res);
-            return res;
-        });
+        {
+            UserService.getUser().then((res) => {
+                if (res) {
+                    setUser(res);
+                }
+                return res;
+            });
+        }
     }, []);
     const [navbarType, setNavbarType] = useState();
     const [controller, dispatch] = useSoftUIController();
@@ -124,7 +128,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
             sx={{ mt: 2 }}
         >
             <MenuItem>
-                <Link to="/profile"> Profile </Link>{' '}
+                <Link to={'/profile/' + user.userId}> Profile </Link>{' '}
             </MenuItem>{' '}
             <MenuItem>
                 <p onClick={handleLogout} to="/authentication/log-out">
@@ -151,7 +155,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                         </SoftBox>{' '}
                         <SoftBox style={{ display: 'flex' }} color={light ? 'white' : 'inherit'}>
                             {' '}
-                            {user ? (
+                            {user.userId ? (
                                 <h4
                                     style={{ fontSize: '14px', padding: '8px', cursor: 'pointer', userSelect: 'none' }}
                                     onClick={handleOpenMenu}

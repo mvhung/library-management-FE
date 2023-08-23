@@ -69,14 +69,17 @@ function ProfileForm() {
         });
         UserService.updateUser(id, user).then(
             (res) => {
-                navigate('/profile');
+                navigate('/profile/' + id);
             },
             (error) => {
                 console.log(error);
             },
         );
     }
-
+    function handleDeleteImg() {
+        setAvatarUrl('');
+        setAvatar('');
+    }
     function handleFileInput(file) {
         if (file.length != 0) {
             let newUrl = URL.createObjectURL(file[0]);
@@ -94,7 +97,7 @@ function ProfileForm() {
                         <div className={clsx(styles2.wrapperPreview)}>
                             {' '}
                             {avatarUrl ? (
-                                <PreviewImg src={avatarUrl} edit />
+                                <PreviewImg src={avatarUrl} edit={handleDeleteImg} />
                             ) : (
                                 <BookImgInput onChangeFile={handleFileInput} />
                             )}{' '}

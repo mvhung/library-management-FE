@@ -45,7 +45,7 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from 'contex
 
 // Images
 import brand from 'assets/images/logo-ct.png';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/images/favicon.png';
 
 import styles from './App.css';
 // import BookFormUpdate from 'layouts/createForm/book/BookFormUpdate';
@@ -132,7 +132,7 @@ export default function App() {
                     <Sidenav
                         color={sidenavColor}
                         brand={logo}
-                        brandName="Soft UI Dashboard"
+                        brandName="Library management"
                         routes={routes}
                         onMouseEnter={handleOnMouseEnter}
                         onMouseLeave={handleOnMouseLeave}

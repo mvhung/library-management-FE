@@ -51,8 +51,10 @@ import team3 from 'assets/images/team-3.jpg';
 import team4 from 'assets/images/team-4.jpg';
 import { useEffect, useState } from 'react';
 import UserService from 'services/user.service';
+import { useParams } from 'react-router-dom';
 
 function Overview() {
+    const { id } = useParams();
     const [user, setUser] = useState({
         userId: null,
         username: null,
@@ -63,11 +65,23 @@ function Overview() {
     });
 
     useEffect(() => {
-        UserService.getUser().then((res) => {
-            setUser(res);
-            console.log(res);
-            return res;
-        });
+        let roleName = JSON.parse(localStorage.getItem('user')).roleName;
+        if (id == 1 || id == 2) {
+            UserService.getUser().then((res) => {
+                setUser(res);
+                return res;
+            });
+        } else if (roleName == 'ADMIN') {
+            UserService.getUserById(id).then((res) => {
+                setUser(res);
+                return res;
+            });
+        } else {
+            UserService.getUser().then((res) => {
+                setUser(res);
+                return res;
+            });
+        }
     }, []);
 
     return (
