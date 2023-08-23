@@ -3,11 +3,11 @@ import authHeader from './auth.header.js';
 
 const API_URL = 'http://localhost:8080/api/v1/';
 
-const getBooks = () => {
-    return axios.get(API_URL + 'books').then((res) => {
-        return res.data;
-    });
+const getBooks = async () => {
+    const res = await axios.get(API_URL + 'books');
+    return res.data;
 };
+
 const getCategories = async () => {
     try {
         const response = await axios.get(API_URL + 'categories?size=5');
@@ -54,6 +54,9 @@ const createBook = (book) => {
     return axios.post(API_URL + 'books', book, { headers: authHeader() });
 };
 
+const deleteBook = (id) => {
+    return axios.delete(API_URL + 'books/' + id, { headers: authHeader() });
+};
 const updateBookImg = (img) => {
     let bodyFormData = new FormData();
     bodyFormData.append('bookImgLink', img);
@@ -86,6 +89,7 @@ const BookService = {
     updateBook,
     createBook,
     searchBook,
+    deleteBook,
 };
 
 export default BookService;

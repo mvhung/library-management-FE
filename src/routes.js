@@ -58,6 +58,7 @@ import Book from 'layouts/createForm/book/Book';
 import ProfileForm from 'layouts/profile/ProfileForm';
 import UserManager from 'layouts/user/UserManager';
 import BookManager from 'layouts/book/BookManger';
+import LoanManager from 'layouts/loan/LoanManager';
 const routes = [
     // {
     //     type: 'collapse',
@@ -129,6 +130,15 @@ const routes = [
         route: 'manage/user',
         icon: <Cube size="12px" />,
         component: <UserManager />,
+        noCollapse: true,
+    },
+    {
+        type: 'Admin',
+        name: 'Loan table',
+        key: 'all-loans',
+        route: 'manage/loan',
+        icon: <Cube size="12px" />,
+        component: <LoanManager />,
         noCollapse: true,
     },
     {

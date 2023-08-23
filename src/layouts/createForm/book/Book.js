@@ -27,6 +27,7 @@ import React, { useEffect } from 'react';
 import BookService from 'services/book.service';
 import UserService from 'services/user.service';
 import EditBtn from './components/EditBtn';
+import RentModal from './components/RentModal';
 function Book() {
     const { bookId } = useParams();
     const [user, setUser] = useState();
@@ -36,6 +37,7 @@ function Book() {
         UserService.getUser().then((res) => {
             if (res) {
                 setUserRole(res.roleName);
+                setUser(res);
             }
         });
     }, []);
@@ -120,9 +122,13 @@ function Book() {
                                 <span style={{ fontSize: '14px' }}>{bookDetail.publisher.publisherName}</span>
                             </div>
                         </SoftBox>
-
+                        {/* <span>Available: {bookDetail.bookQuantity}</span> */}
                         <div className={clsx(styles.submitBtn)} style={{ marginTop: '32px' }}>
-                            <button onClick={handleSubmit}>Rent Now</button>
+                            {/* <input type="number" value={rentNum} onChange={(e) => setRentNum(e.target.value)} /> */}
+                            {/* <button onClick={handleSubmit}>Rent Now</button> */}
+                            <RentModal book={bookDetail} user={user}>
+                                Rent Now
+                            </RentModal>
                             {userRole == 'ADMIN' && <EditBtn id={parseInt(bookId)} />}
                         </div>
 
