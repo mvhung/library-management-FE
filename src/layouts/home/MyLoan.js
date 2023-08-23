@@ -19,22 +19,24 @@ function MyLoan() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        let id = JSON.parse(localStorage.getItem('user')).userId;
-        LoanService.getMyLoans(id).then((res) => {
-            setRows((pre) => {
-                pre = [];
-                res.map((loan) =>
-                    pre.push({
-                        id: loan.loanId,
-                        username: loan.userName,
-                        bookTitle: loan.bookTitle,
-                        bookQuantity: loan.bookQuantity,
-                        bookImageLink: loan.bookImageLink,
-                    }),
-                );
-                return [...pre];
+        let user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            LoanService.getMyLoans(user.userId).then((res) => {
+                setRows((pre) => {
+                    pre = [];
+                    res.map((loan) =>
+                        pre.push({
+                            id: loan.loanId,
+                            username: loan.userName,
+                            bookTitle: loan.bookTitle,
+                            bookQuantity: loan.bookQuantity,
+                            bookImageLink: loan.bookImageLink,
+                        }),
+                    );
+                    return [...pre];
+                });
             });
-        });
+        }
     }, []);
 
     const handleEditClick = (id) => () => {
@@ -118,25 +120,27 @@ function MyLoan() {
     return (
         <DashboardLayout>
             <DashboardNavbar />
-            <Box sx={{ height: 550, width: '100%' }}>
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    initialState={{
-                        pagination: {
-                            paginationModel: {
-                                pageSize: 8,
+            {localStorage.getItem('user') && (
+                <Box sx={{ height: 550, width: '100%' }}>
+                    <DataGrid
+                        rows={rows}
+                        columns={columns}
+                        initialState={{
+                            pagination: {
+                                paginationModel: {
+                                    pageSize: 8,
+                                },
                             },
-                        },
-                    }}
-                    // slots={{
-                    //     toolbar: EditToolbar,
-                    // }}
-                    pageSizeOptions={[8]}
-                    checkboxSelection
-                    disableRowSelectionOnClick
-                />
-            </Box>
+                        }}
+                        // slots={{
+                        //     toolbar: EditToolbar,
+                        // }}
+                        pageSizeOptions={[8]}
+                        checkboxSelection
+                        disableRowSelectionOnClick
+                    />
+                </Box>
+            )}
         </DashboardLayout>
     );
 }
