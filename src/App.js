@@ -144,7 +144,7 @@ export default function App() {
             <Routes>
                 {getRoutes(routes)}
                 {/* <Route path="/update/book" render={(props) => <BookFormUpdate {...props} />} /> */}
-                <Route path="*" element={<Navigate to="/home" />} />
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </ThemeProvider>
     );

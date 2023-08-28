@@ -74,7 +74,7 @@ const routes = [
         type: 'collapse',
         name: 'Home',
         key: 'home',
-        route: '/home',
+        route: '/',
         icon: <Shop size="12px" />,
         component: <Home />,
         noCollapse: true,
