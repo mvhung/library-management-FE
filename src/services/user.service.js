@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth.header.js';
+import { BE_SERVER } from 'CONSTANST.js';
 
-const API_URL = 'http://localhost:8080/api/v1/users/';
+const API_URL = BE_SERVER + 'api/v1/users/';
 
 const getUser = async () => {
     try {
@@ -17,7 +18,7 @@ const getUser = async () => {
 };
 const getUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:8080/api/v1/users', {
+        const response = await axios.get(BE_SERVER + 'api/v1/users', {
             headers: authHeader(),
         });
         localStorage.setItem('user', JSON.stringify(response.data));

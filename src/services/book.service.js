@@ -1,7 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth.header.js';
+import { BE_SERVER } from 'CONSTANST.js';
 
-const API_URL = 'http://localhost:8080/api/v1/';
+const API_URL = BE_SERVER + 'api/v1/';
 
 const getBooks = async () => {
     const res = await axios.get(API_URL + 'books');
