@@ -48,7 +48,7 @@ function SignIn() {
     const handleSubmit = (event) => {
         AuthService.login(email, password).then(
             () => {
-                navigate('/home');
+                navigate('/');
                 // window.location.reload();
             },
             (error) => {

@@ -52,7 +52,7 @@ export default function RentModal({ user, book, children }) {
             ],
         };
         LoanService.addLoan([postLoan]).then((res) => {
-            navigate('/home');
+            navigate('/');
         });
     };
 

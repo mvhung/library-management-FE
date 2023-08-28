@@ -110,7 +110,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     const handleLogout = () => {
         AuthService.logout();
-        navigate('/home');
+        navigate('/');
         window.location.reload();
     };
 
@@ -131,7 +131,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Link to={'/profile/' + user.userId}> Profile </Link>{' '}
             </MenuItem>{' '}
             <MenuItem>
-                <p onClick={handleLogout} to="/home">
+                <p onClick={handleLogout} to="/">
                     Log out{' '}
                 </p>{' '}
             </MenuItem>{' '}

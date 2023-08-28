@@ -124,7 +124,7 @@ function BookForm() {
         };
         BookService.createBook(postData).then((res) => {
             console.log(res);
-            navigate('/home');
+            navigate('/');
         });
         console.log('Submit data:', postData);
         // Here you can send the postData to your API endpoint
@@ -180,7 +180,7 @@ function BookForm() {
         };
         BookService.updateBook(id, postData2).then((res) => {
             console.log(res);
-            navigate('/home');
+            navigate('/');
         });
         console.log('Submit data:', postData2);
         // Here you can send the postData to your API endpoint
