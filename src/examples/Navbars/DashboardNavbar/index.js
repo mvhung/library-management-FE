@@ -131,7 +131,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 <Link to={'/profile/' + user.userId}> Profile </Link>{' '}
             </MenuItem>{' '}
             <MenuItem>
-                <p onClick={handleLogout} to="/authentication/log-out">
+                <p onClick={handleLogout} to="/home">
                     Log out{' '}
                 </p>{' '}
             </MenuItem>{' '}
