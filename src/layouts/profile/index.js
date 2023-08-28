@@ -66,7 +66,8 @@ function Overview() {
 
     useEffect(() => {
         let roleName = JSON.parse(localStorage.getItem('user')).roleName;
-        if (id == 1 || id == 2) {
+        let userId = JSON.parse(localStorage.getItem('user')).userId;
+        if (id == userId) {
             UserService.getUser().then((res) => {
                 setUser(res);
                 return res;
